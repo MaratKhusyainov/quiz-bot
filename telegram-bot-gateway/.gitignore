@@ -31,13 +31,3 @@ build/
 
 ### VS Code ###
 .vscode/
-/.mvn/
-/mvnw
-/mvnw.cmd
-/question-api/mvnw
-/question-api/mvnw.cmd
-/question-api/.mvn/
-/telegram-bot-gateway/.mvn/
-/telegram-bot-gateway/mvnw
-/telegram-bot-gateway/mvnw.cmd
-/telegram-bot-gateway/src/main/resources/telegram-bot-gateway-secret.yml

@@ -20,6 +20,7 @@
 
     <modules>
         <module>question-api</module>
+        <module>telegram-bot-gateway</module>
     </modules>
 
     <dependencies>
