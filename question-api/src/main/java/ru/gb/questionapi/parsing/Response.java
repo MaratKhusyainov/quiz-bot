@@ -4,12 +4,12 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Response {
-    List<Data> data;
+    List<QuestionWithAnswers> questionWithAnswers;
 
     public void getData() {
-        for (int i = 0; i < data.size(); i++) {
-            System.out.println(data.get(i).getQuestion());
-            System.out.println(Arrays.toString(data.get(i).getAnswers()));
+        for (int i = 0; i < questionWithAnswers.size(); i++) {
+            System.out.println(questionWithAnswers.get(i).getQuestion());
+            System.out.println(Arrays.toString(questionWithAnswers.get(i).getAnswers()));
         }
     }
 

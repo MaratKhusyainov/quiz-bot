@@ -1,0 +1,7 @@
+spring:
+  jpa:
+    hibernate: validate
+    show-sql: true
+  datasource:
+    url: jdbc:postgresql://109.248.203.238:5432/quiz_bot
+    username: quiz_bot_owner
