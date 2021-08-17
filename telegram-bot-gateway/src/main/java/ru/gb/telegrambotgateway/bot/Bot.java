@@ -11,6 +11,7 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
+import ru.gb.telegrambotgateway.model.Stage;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,6 +37,8 @@ public class Bot extends TelegramLongPollingBot {
 
     @Override
     public void onUpdateReceived(Update update) {
+        Stage stage = Stage.DAILY_RATING;
+        stage.ordinal();
         String chatId = update.getMessage().getChatId().toString();
 
         InlineKeyboardButton button1 = new InlineKeyboardButton();
