@@ -1,5 +1,6 @@
 package ru.gb.telegrambotgateway.bot;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
@@ -11,12 +12,22 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
+import ru.gb.telegrambotgateway.button.Button;
+import ru.gb.telegrambotgateway.factory.ButtonFactory;
+import ru.gb.telegrambotgateway.factory.HandlerFactory;
+import ru.gb.telegrambotgateway.handler.Handler;
+import ru.gb.telegrambotgateway.model.ResponseMessage;
+import ru.gb.telegrambotgateway.model.Stage;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Component
+@RequiredArgsConstructor
 public class Bot extends TelegramLongPollingBot {
+
+    private final HandlerFactory handlerFactory;
+    private final ButtonFactory buttonFactory;
 
     @Value("${bot.name}")
     String botUsername;
@@ -37,65 +48,19 @@ public class Bot extends TelegramLongPollingBot {
     @Override
     public void onUpdateReceived(Update update) {
         String chatId = update.getMessage().getChatId().toString();
+        String text = update.getMessage().getText();
 
-        InlineKeyboardButton button1 = new InlineKeyboardButton();
-        button1.setText("question");
-        button1.setCallbackData("question callback");
-        InlineKeyboardButton button2 = new InlineKeyboardButton();
-        button2.setText("answer 1");
-        button2.setCallbackData("answer 1 callback");
-        InlineKeyboardButton button3 = new InlineKeyboardButton();
-        button3.setText("answer 2");
-        button3.setCallbackData("answer 2 callback");
-        InlineKeyboardButton button4 = new InlineKeyboardButton();
-        button4.setText("answer 3");
-        button4.setCallbackData("answer 3 callback");
-        InlineKeyboardButton button5 = new InlineKeyboardButton();
-        button5.setText("answer 4");
-        button5.setCallbackData("answer 4 callback");
+        Stage stage = Stage.MAIN; //TODO mock
+        Handler handler = handlerFactory.getHandler(stage);
+        ResponseMessage responseMessage = handler.handle(chatId, text);
 
-        List<InlineKeyboardButton> keyboardButtonsRow1 = new ArrayList<>();
-        keyboardButtonsRow1.add(button1);
-        List<InlineKeyboardButton> keyboardButtonsRow2 = new ArrayList<>();
-        keyboardButtonsRow2.add(button2);
-        keyboardButtonsRow2.add(button3);
-        List<InlineKeyboardButton> keyboardButtonsRow3 = new ArrayList<>();
-        keyboardButtonsRow3.add(button4);
-        keyboardButtonsRow3.add(button5);
-        List<List<InlineKeyboardButton>> rowList = new ArrayList<>();
-        InlineKeyboardMarkup markup = new InlineKeyboardMarkup();
-        rowList.add(keyboardButtonsRow1);
-        rowList.add(keyboardButtonsRow2);
-        rowList.add(keyboardButtonsRow3);
-        markup.setKeyboard(rowList);
-
-        SendMessage message = new SendMessage();
-        message.setChatId(chatId);
-        message.setText("5");
-        message.setReplyMarkup(markup);
+        Button button = buttonFactory.getButtons(responseMessage.getButtonStage());
+        button.setButton(responseMessage.getSendMessage());
 
         try {
-            Message responseMessage = execute(message);
-            EditMessageText editMessage = new EditMessageText();
-            editMessage.setChatId(chatId);
-            editMessage.setMessageId(responseMessage.getMessageId());
-            for (int i = 4; i > 0; i--) {
-                Thread.sleep(1000L);
-                editMessage.setText(String.valueOf(i));
-                editMessage.setReplyMarkup(markup);
-                execute(editMessage);
-            }
-            DeleteMessage deleteMessage = new DeleteMessage();
-            deleteMessage.setChatId(chatId);
-            deleteMessage.setMessageId(responseMessage.getMessageId());
-            execute(deleteMessage);
-            SendMessage end = new SendMessage();
-            end.setChatId(chatId);
-            end.setText("Time out");
-            execute(end);
-        } catch (TelegramApiException | InterruptedException e) {
+            execute(responseMessage.getSendMessage());
+        } catch (TelegramApiException e) {
             e.printStackTrace();
         }
-
     }
 }
