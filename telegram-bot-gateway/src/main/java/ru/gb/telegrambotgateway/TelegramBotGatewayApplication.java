@@ -10,6 +10,6 @@ public class TelegramBotGatewayApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(TelegramBotGatewayApplication.class, args);
-    }
 
+    }
 }
