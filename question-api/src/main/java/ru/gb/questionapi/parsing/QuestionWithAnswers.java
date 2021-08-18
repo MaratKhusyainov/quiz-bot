@@ -7,6 +7,7 @@ import lombok.Setter;
 import org.springframework.context.annotation.Bean;
 
 import javax.persistence.Entity;
+import java.util.Objects;
 
 @Data
 public class QuestionWithAnswers {
@@ -14,4 +15,6 @@ public class QuestionWithAnswers {
     String question;
     String [] answers;
     int id;
+
 }
+

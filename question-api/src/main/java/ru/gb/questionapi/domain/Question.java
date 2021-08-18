@@ -28,7 +28,7 @@ public class Question extends QuestionWithAnswers {
     @Column(name = "answer2")
     private String answer2;
 
-   @Column(name = "answer3")
+    @Column(name = "answer3")
     private String answer3;
 
     @Column(name = "answer4")

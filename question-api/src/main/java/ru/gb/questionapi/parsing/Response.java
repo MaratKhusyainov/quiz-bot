@@ -4,6 +4,7 @@ import lombok.*;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 @Getter
 @Setter
@@ -15,11 +16,4 @@ public class Response {
     Boolean ok;
     int amount;
 
-    public void getData() {
-        for (int i = 0; i < data.size(); i++) {
-            System.out.println(data.get(i).getQuestion());
-            System.out.println(Arrays.toString(data.get(i).getAnswers()));
-        }
-//        System.out.println("test");
-    }
 }

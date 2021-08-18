@@ -2,8 +2,10 @@ package ru.gb.questionapi;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.google.gson.Gson;
+import javafx.util.converter.LocalDateTimeStringConverter;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.query.criteria.internal.expression.function.CurrentTimestampFunction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -14,16 +16,28 @@ import org.springframework.context.annotation.Configuration;
 
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.event.EventListener;
+
+import ru.gb.questionapi.domain.History;
 import ru.gb.questionapi.domain.Question;
+import ru.gb.questionapi.domain.User;
+import ru.gb.questionapi.parsing.QuestionWithAnswers;
 import ru.gb.questionapi.parsing.Response;
+
+import ru.gb.questionapi.services.HistoryService;
 import ru.gb.questionapi.services.QuestionService;
+import ru.gb.questionapi.services.UserService;
 
 import javax.annotation.PostConstruct;
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.util.Arrays;
+import java.util.Date;
 import java.util.Objects;
 
-import static ru.gb.questionapi.SendRequest.giveMeResponse;
+
+
 import static ru.gb.questionapi.SendRequest.sendGet;
+
 
 
 //@SpringBootApplication(exclude = {JacksonAutoConfiguration.class })
@@ -31,51 +45,56 @@ import static ru.gb.questionapi.SendRequest.sendGet;
 @PropertySource("classpath:telegram-bot-secret.properties")
 public class QuestionApiApplication {
 
-    @Autowired
-    private QuestionService questionService;
+//    @Autowired
+//    private HistoryService historyService;
+//    @Autowired
+//    private UserService userService;
+//    @Autowired
+//    private QuestionService questionService;
+
 
 
     public static void main(String[] args) throws IOException, InterruptedException {
         SpringApplication.run(QuestionApiApplication.class, args);
     }
+//
+    @EventListener(ApplicationReadyEvent.class)
+    private void test() throws JsonProcessingException {
 
-        @EventListener(ApplicationReadyEvent.class)
-        private void test() throws JsonProcessingException {
 
-        giveMeResponse();
 
-//            System.out.println(giveMeResponse().getQuestionWithAnswers());
-
-//        String r = sendGet(1,1);
+//        int difficult = 2;
+//        int quantity = 3;
+//        String r = sendGet(difficult,quantity);
+//
+//        Gson gson = new Gson();
 //        Response response = gson.fromJson(r, Response.class);
-//        System.out.println(response.getQuestionWithAnswers());
-
-
-//            int quantity = 1;
-//            int difficult = 1;
-//            Gson gson = new Gson();
 //
-//            Response response = new Response();
-//            System.out.println((gson.fromJson(sendGet(difficult,quantity), Response.class)).getQuestionWithAnswers());
-//            response = ;
+////        String [] answers = new String[4];
 //
-//            response.getData();
-
-
-//            for (int i = 0; i < quantity; i++) {
-//                String [] answers = response.getQuestionWithAnswers().get(i).getAnswers();
-//                Question question = Question.builder()
-//                        .question(response.getQuestionWithAnswers().get(i).getQuestion())
-//                        .answer1(answers[0])
-//                        .answer2(answers[1])
-//                        .answer3(answers[2])
-//                        .answer4(answers[3])
-//                        .complexity(difficult)
-//                        .hash(response.getQuestionWithAnswers().get(i).getQuestion().hashCode())
-//                        .build();
 //
-//                questionService.saveOrUpdate(question);
-//            }
-        }
+//        for (int i = 0; i < quantity; i++) {
+//            String [] answers = response.getData().get(i).getAnswers();
+//            Question question = new Question();
+//            question.setQuestion(response.getData().get(i).getQuestion());
+//            question.setAnswers(response.getData().get(i).getAnswers());
+//            question.setAnswer1(answers[0]);
+//            question.setAnswer2(answers[1]);
+//            question.setAnswer3(answers[2]);
+//            question.setAnswer4(answers[3]);
+//            question.setComplexity(difficult);
+//            question.setHash(answers[0].hashCode());
+//
+//        questionService.saveOrUpdate(question);
+//
+//        }
+
+//        User user = userService.findById(1L);
+//        System.out.println(user.getName());
+//
+//
+//        History history = new History(1L, user,  1L, true, LocalDateTime.now());
+//
+//        historyService.saveOrUpdate(history);
     }
-
+}

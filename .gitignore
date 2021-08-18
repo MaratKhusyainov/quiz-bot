@@ -37,5 +37,3 @@ build/
 /question-api/mvnw
 /question-api/mvnw.cmd
 /question-api/.mvn/
-
-question-api/src/main/resources/telegram-bot-secret.properties
