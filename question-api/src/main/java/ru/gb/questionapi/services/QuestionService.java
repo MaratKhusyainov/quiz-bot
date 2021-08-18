@@ -30,8 +30,8 @@ public class QuestionService {
     }
 
     @Transactional
-    public Question findNewQuestion(Long userId){
-        return questionRepository.findOneNewQuestion(userId);
+    public Question findNewQuestion(Long chatId){
+        return questionRepository.findOneNewQuestion(chatId);
 
     }
 
