@@ -1,8 +1,10 @@
 package ru.gb.telegrambotgateway.handler;
 
+import org.springframework.stereotype.Component;
 import ru.gb.telegrambotgateway.model.ResponseMessage;
 import ru.gb.telegrambotgateway.model.Stage;
 
+@Component
 public class MonthlyRatingHandler implements Handler {
 
     @Override

@@ -1,12 +1,11 @@
 package ru.gb.telegrambotgateway.handler;
 
+import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import ru.gb.telegrambotgateway.model.ResponseMessage;
-import ru.gb.telegrambotgateway.service.ResponseTextService;
 
+@Component
 public interface Handler {
-
-    ResponseTextService textService = new ResponseTextService();
 
     ResponseMessage handle(Long chatId, String text);
 

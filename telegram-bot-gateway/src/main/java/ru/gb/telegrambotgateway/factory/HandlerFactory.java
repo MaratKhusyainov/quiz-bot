@@ -1,32 +1,43 @@
 package ru.gb.telegrambotgateway.factory;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import ru.gb.telegrambotgateway.handler.*;
 import ru.gb.telegrambotgateway.model.Stage;
 
 @Component
+@RequiredArgsConstructor
 public class HandlerFactory {
+
+    private final MainHandler mainHandler;
+    private final PlayHandler playHandler;
+    private final RatingHandler ratingHandler;
+    private final SupportHandler supportHandler;
+    private final TotalRatingHandler totalRatingHandler;
+    private final DailyRatingHandler dailyRatingHandler;
+    private final WeeklyRatingHandler weeklyRatingHandler;
+    private final MonthlyRatingHandler monthlyRatingHandler;
 
     public Handler getHandler(Stage stage) {
 
         switch (stage) {
             case MAIN:
             default:
-                return new MainHandler();
+                return mainHandler;
             case PLAY:
-                return new PlayHandler();
+                return playHandler;
             case RATING:
-                return new RatingHandler();
+                return ratingHandler;
             case SUPPORT:
-                return new SupportHandler();
+                return supportHandler;
             case TOTAL_RATING:
-                return new TotalRatingHandler();
+                return totalRatingHandler;
             case DAILY_RATING:
-                return new DailyRatingHandler();
+                return dailyRatingHandler;
             case WEEKLY_RATING:
-                return new WeeklyRatingHandler();
+                return weeklyRatingHandler;
             case MONTHLY_RATING:
-                return new MonthlyRatingHandler();
+                return monthlyRatingHandler;
         }
     }
 

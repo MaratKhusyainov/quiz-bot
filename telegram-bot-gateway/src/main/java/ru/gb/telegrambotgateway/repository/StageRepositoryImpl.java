@@ -10,14 +10,14 @@ import ru.gb.telegrambotgateway.model.Stage;
 @Repository
 public class StageRepositoryImpl implements StageRepository {
     private static final String KEY = "Stage";
-    private final HashOperations stageHashOperations;
+    private final HashOperations<String, Long, Stage> hashOperations;
 
     public Stage getByChatId(Long chatId) {
-        return (Stage) stageHashOperations.get(KEY, chatId);
+        return (Stage) hashOperations.get(KEY, chatId);
     }
 
     public void save(Long chatId, Stage stage) {
-        stageHashOperations.put(KEY, chatId, stage);
+        hashOperations.put(KEY, chatId, stage);
     }
 
 

@@ -1,32 +1,43 @@
 package ru.gb.telegrambotgateway.factory;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import ru.gb.telegrambotgateway.button.*;
 import ru.gb.telegrambotgateway.model.Stage;
 
 @Component
+@RequiredArgsConstructor
 public class ButtonFactory {
-    
+
+    private final MainButton mainButton;
+    private final PlayButton playButton;
+    private final RatingButton ratingButton;
+    private final SupportButton supportButton;
+    private final TotalRatingButton totalRatingButton;
+    private final DailyRatingButton dailyRatingButton;
+    private final WeeklyRatingButton weeklyRatingButton;
+    private final MonthlyRatingButton monthlyRatingButton;
+
     public Button getButtons(Stage stage) {
 
         switch (stage) {
             case MAIN:
             default:
-                return new MainButton();
+                return mainButton;
             case PLAY:
-                return new PlayButton();
+                return playButton;
             case RATING:
-                return new RatingButton();
+                return ratingButton;
             case SUPPORT:
-                return new SupportButton();
+                return supportButton;
             case TOTAL_RATING:
-                return new TotalRatingButton();
+                return totalRatingButton;
             case DAILY_RATING:
-                return new DailyRatingButton();
+                return dailyRatingButton;
             case WEEKLY_RATING:
-                return new WeeklyRatingButton();
+                return weeklyRatingButton;
             case MONTHLY_RATING:
-                return new MonthlyRatingButton();
+                return monthlyRatingButton;
         }
     }
     

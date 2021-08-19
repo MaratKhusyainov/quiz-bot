@@ -1,9 +1,16 @@
 package ru.gb.telegrambotgateway.handler;
 
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 import ru.gb.telegrambotgateway.model.ResponseMessage;
 import ru.gb.telegrambotgateway.model.Stage;
+import ru.gb.telegrambotgateway.service.ResponseTextService;
 
+@Component
+@RequiredArgsConstructor
 public class RatingHandler implements Handler {
+
+    private final ResponseTextService textService;
 
     @Override
     public ResponseMessage handle(Long chatId, String text) {

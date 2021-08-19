@@ -1,6 +1,7 @@
 package ru.gb.telegrambotgateway.config;
 
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -15,24 +16,30 @@ import org.springframework.data.redis.serializer.GenericToStringSerializer;
 @ComponentScan("ru.gb.telegrambotgateway")
 public class RedisConfig {
 
+    @Value("${redis.host}")
+    String redisHost;
+
+    @Value("${redis.port}")
+    int redisPort;
+
     @Bean
     public JedisConnectionFactory connectionFactory() {
         RedisStandaloneConfiguration configuration = new RedisStandaloneConfiguration();
-        configuration.setHostName("localhost");
-        configuration.setPort(6379);
+        configuration.setHostName(redisHost);
+        configuration.setPort(redisPort);
         return new JedisConnectionFactory(configuration);
     }
 
     @Bean
     public RedisTemplate<Long, Object> redisTemplate() {
-        final RedisTemplate<Long, Object> template = new RedisTemplate<Long, Object>();
+        final RedisTemplate<Long, Object> template = new RedisTemplate<>();
         template.setConnectionFactory(connectionFactory());
-        template.setValueSerializer(new GenericToStringSerializer<Object>(Object.class));
+        template.setValueSerializer(new GenericToStringSerializer<>(Object.class));
         return template;
     }
 
     @Bean
-    public HashOperations stageHashOperations() {
+    public HashOperations hashOperations() {
         return redisTemplate().opsForHash();
 
     }
