@@ -6,11 +6,11 @@ import ru.gb.telegrambotgateway.model.Stage;
 public class MainHandler implements Handler {
 
     @Override
-    public ResponseMessage handle(String chatId, String text) {
+    public ResponseMessage handle(Long chatId, String text) {
         ResponseMessage responseMessage = getResponseMessage(chatId);
         switch (text) {
             case "Играть":
-                responseMessage.getSendMessage().setText("Играем");
+                responseMessage.getSendMessage().setText(textService.getPlay(chatId));
                 responseMessage.setButtonStage(Stage.PLAY);
                 break;
             case "Рейтинг":
@@ -18,8 +18,8 @@ public class MainHandler implements Handler {
                 responseMessage.setButtonStage(Stage.RATING);
                 break;
             case "Помощь":
-                responseMessage.getSendMessage().setText("Помощь");
-                responseMessage.setButtonStage(Stage.MAIN);
+                responseMessage.getSendMessage().setText(textService.getSupport());
+                responseMessage.setButtonStage(Stage.SUPPORT);
                 break;
             default:
                 responseMessage.getSendMessage().setText("Неверная команда");

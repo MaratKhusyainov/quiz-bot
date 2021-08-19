@@ -8,13 +8,17 @@ import ru.gb.telegrambotgateway.model.Stage;
 
 @RequiredArgsConstructor
 @Repository
-public class RedisRepositoryImpl implements RedisRepository {
+public class StageRepositoryImpl implements StageRepository {
     private static final String KEY = "Stage";
     private final HashOperations stageHashOperations;
 
-    public Stage getByChatId(Long chatId) { return (Stage) stageHashOperations.get(KEY, chatId); }
+    public Stage getByChatId(Long chatId) {
+        return (Stage) stageHashOperations.get(KEY, chatId);
+    }
 
-    public void save(Long chatId, Stage stage) {stageHashOperations.put(KEY, chatId, stage);}
+    public void save(Long chatId, Stage stage) {
+        stageHashOperations.put(KEY, chatId, stage);
+    }
 
 
 }

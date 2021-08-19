@@ -6,23 +6,23 @@ import ru.gb.telegrambotgateway.model.Stage;
 public class RatingHandler implements Handler {
 
     @Override
-    public ResponseMessage handle(String chatId, String text) {
+    public ResponseMessage handle(Long chatId, String text) {
         ResponseMessage responseMessage = getResponseMessage(chatId);
         switch (text) {
             case "День":
-                responseMessage.getSendMessage().setText("Рейтинг за день:");
+                responseMessage.getSendMessage().setText(textService.getDailyRating(chatId));
                 responseMessage.setButtonStage(Stage.DAILY_RATING);
                 break;
             case "Неделя":
-                responseMessage.getSendMessage().setText("Рейтинг за неделю");
+                responseMessage.getSendMessage().setText(textService.getWeeklyRating(chatId));
                 responseMessage.setButtonStage(Stage.WEEKLY_RATING);
                 break;
             case "Месяц":
-                responseMessage.getSendMessage().setText("Рейтинг за месяц");
+                responseMessage.getSendMessage().setText(textService.getMonthlyRating(chatId));
                 responseMessage.setButtonStage(Stage.MONTHLY_RATING);
                 break;
             case "Общий":
-                responseMessage.getSendMessage().setText("Общий рейтинг");
+                responseMessage.getSendMessage().setText(textService.getTotalRating(chatId));
                 responseMessage.setButtonStage(Stage.TOTAL_RATING);
                 break;
             case "Назад":

@@ -15,7 +15,6 @@ import org.springframework.data.redis.serializer.GenericToStringSerializer;
 @ComponentScan("ru.gb.telegrambotgateway")
 public class RedisConfig {
 
-
     @Bean
     public JedisConnectionFactory connectionFactory() {
         RedisStandaloneConfiguration configuration = new RedisStandaloneConfiguration();

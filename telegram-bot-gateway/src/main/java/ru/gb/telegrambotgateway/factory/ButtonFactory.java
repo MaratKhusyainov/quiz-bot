@@ -1,9 +1,6 @@
 package ru.gb.telegrambotgateway.factory;
 
 import org.springframework.stereotype.Component;
-import ru.gb.telegrambotgateway.button.Button;
-import ru.gb.telegrambotgateway.button.MainButton;
-import ru.gb.telegrambotgateway.button.PlayButton;
 import ru.gb.telegrambotgateway.button.*;
 import ru.gb.telegrambotgateway.model.Stage;
 

@@ -6,7 +6,7 @@ import ru.gb.telegrambotgateway.model.Stage;
 public class DailyRatingHandler implements Handler {
 
     @Override
-    public ResponseMessage handle(String chatId, String text) {
+    public ResponseMessage handle(Long chatId, String text) {
         ResponseMessage responseMessage = getResponseMessage(chatId);
         if (text.equals("Назад")) {
             responseMessage.getSendMessage().setText("Возврат");
