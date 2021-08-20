@@ -1,0 +1,12 @@
+spring:
+  jpa:
+    hibernate: validate
+    show-sql: true
+    properties:
+      hibernate:
+        default_schema: quiz_bot
+  datasource:
+#    url: jdbc:postgresql://109.248.203.238:5432/quiz_bot
+    url: jdbc:postgresql://109.248.203.238:5432/quiz_bot?characterEncoding=utf8
+    username: quiz_bot_owner
+    password: ${pg.pass}
