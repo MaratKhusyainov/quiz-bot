@@ -15,8 +15,10 @@ public class QuestionsController {
     public QuestionsController(QuestionService questionService) {
         this.questionService = questionService;
     }
+
     @GetMapping("/{id}")
     public ResponseEntity<?> getOneQuestionWithAnswers(@PathVariable Long id){
         return new ResponseEntity<>(questionService.findNewQuestion(id), HttpStatus.OK);
     }
+
 }

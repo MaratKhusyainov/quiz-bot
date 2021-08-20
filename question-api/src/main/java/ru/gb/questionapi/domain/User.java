@@ -31,8 +31,10 @@ public class User {
     @Column(name = "total_rating")
     private int rating;
 
+    @Column(name = "chat_id")
+    private Long chatId;
+
     @OneToMany(mappedBy = "user")
     private List<History> historyList;
-
 
 }
