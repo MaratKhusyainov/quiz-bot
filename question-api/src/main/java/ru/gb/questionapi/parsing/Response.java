@@ -12,8 +12,8 @@ import java.util.Objects;
 @AllArgsConstructor
 public class Response {
 
-    List<QuestionWithAnswers> data;
-    Boolean ok;
-    int amount;
+    private List<QuestionWithAnswers> data;
+    private Boolean ok;
+    private int amount;
 
 }

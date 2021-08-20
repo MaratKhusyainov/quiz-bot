@@ -58,8 +58,8 @@ public class QuestionApiApplication {
         SpringApplication.run(QuestionApiApplication.class, args);
     }
 //
-    @EventListener(ApplicationReadyEvent.class)
-    private void test() throws JsonProcessingException {
+//    @EventListener(ApplicationReadyEvent.class)
+//    private void test() throws JsonProcessingException {
 
 
 
@@ -96,5 +96,5 @@ public class QuestionApiApplication {
 //        History history = new History(1L, user,  1L, true, LocalDateTime.now());
 //
 //        historyService.saveOrUpdate(history);
-    }
+//    }
 }

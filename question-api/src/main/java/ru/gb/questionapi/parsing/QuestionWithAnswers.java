@@ -12,9 +12,9 @@ import java.util.Objects;
 @Data
 public class QuestionWithAnswers {
 
-    String question;
-    String [] answers;
-    int id;
+    private String question;
+    private String [] answers;
+    private int id;
 
 }
 
