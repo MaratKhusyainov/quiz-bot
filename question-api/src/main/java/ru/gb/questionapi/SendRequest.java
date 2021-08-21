@@ -6,11 +6,9 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import ru.gb.questionapi.domain.Question;
 import ru.gb.questionapi.parsing.Response;
-import ru.gb.questionapi.services.HistoryService;
 import ru.gb.questionapi.services.QuestionService;
 
 
@@ -34,33 +32,42 @@ public class SendRequest {
         return result.getBody();
     }
 
-//    public static void takeNewQuestionWithAnswers(int difficult, int quantity) {
-//
-//        String r = sendGet(difficult, quantity);
-//        Gson gson = new Gson();
-//        Response response = gson.fromJson(r, Response.class);
-//
-//        for (int i = 0; i < quantity; i++) {
-//            String[] answers = response.getData().get(i).getAnswers();
-//            Question question = new Question();
-//            question.setQuestion(response.getData().get(i).getQuestion());
-//            question.setAnswers(response.getData().get(i).getAnswers());
-//            question.setAnswer1(answers[0]);
-//            question.setAnswer2(answers[1]);
-//            question.setAnswer3(answers[2]);
-//            question.setAnswer4(answers[3]);
-//            question.setComplexity(difficult);
-//            question.setHash(answers[0].hashCode());
-//            System.out.println(question);
-//
-//            questionService.saveOrUpdate(question);
-//        }
-//    }
+    public static void takeNewQuestionWithAnswers(int difficult, int quantity) {
+
+        String r = sendGet(difficult, quantity);
+        Gson gson = new Gson();
+        Response response = gson.fromJson(r, Response.class);
+
+        for (int i = 0; i < quantity; i++) {
+            String[] answers = response.getData().get(i).getAnswers();
+            Question question = new Question();
+            question.setQuestion(response.getData().get(i).getQuestion());
+            question.setAnswer1(answers[0]);
+            question.setAnswer2(answers[1]);
+            question.setAnswer3(answers[2]);
+            question.setAnswer4(answers[3]);
+            question.setComplexity(difficult);
+            question.setHash(answers[0].hashCode());
+            System.out.println("Получил новый вопрос: " + question);
+            System.out.println("Хэш для проверки: " + question.getHash());
+
+
+            if (isQuestionInDB(question.getHash())){
+                System.out.println("Такого хэша нет");
+
+            } else System.out.println("Такой хэш есть");
+        }
+    }
 
 
     public static Response giveMeResponse(int difficult, int quantity){
         String r = sendGet(difficult, quantity);
         Gson gson = new Gson();
         return gson.fromJson(r, Response.class);
+    }
+
+    public static boolean isQuestionInDB(int hash){
+        if (questionService.findByHash(hash) == null) return true;
+        else return false;
     }
 }

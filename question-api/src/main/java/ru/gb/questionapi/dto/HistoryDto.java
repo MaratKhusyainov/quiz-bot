@@ -6,13 +6,11 @@ import lombok.Getter;
 @Data
 @Getter
 public class HistoryDto {
-    private Long userId;
+    private Long chatId;
     private Long questionId;
     private boolean isCorrect;
 
     public boolean getIsCorrect() {
         return isCorrect;
     }
-
-
 }

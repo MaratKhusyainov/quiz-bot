@@ -5,10 +5,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
-
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 @Entity
 @Table(name = "history")
@@ -17,7 +15,7 @@ import java.util.Date;
 @NoArgsConstructor
 @Builder
 public class History {
-//
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -36,5 +34,4 @@ public class History {
     @Column(name = "date")
     @CreationTimestamp
     private LocalDateTime date;
-
 }
