@@ -42,3 +42,4 @@ build/
 /telegram-bot-gateway/mvnw.cmd
 /telegram-bot-gateway/src/main/resources/telegram-bot-gateway-secret.properties
 /telegram-bot-gateway/src/main/resources/telegram-bot-secret.properties
+/question-api/src/main/resources/question-api-secret.properties

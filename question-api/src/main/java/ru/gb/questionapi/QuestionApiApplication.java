@@ -42,7 +42,7 @@ import static ru.gb.questionapi.SendRequest.sendGet;
 
 //@SpringBootApplication(exclude = {JacksonAutoConfiguration.class })
 @SpringBootApplication
-@PropertySource("classpath:telegram-bot-secret.properties")
+@PropertySource("classpath:question-api-secret.properties")
 public class QuestionApiApplication {
 
 //    @Autowired

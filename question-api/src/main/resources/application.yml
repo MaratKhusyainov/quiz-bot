@@ -4,8 +4,8 @@ spring:
     show-sql: true
     properties:
       hibernate:
-        default_schema: quiz_bot
+        default_schema: ${pg.schema}
   datasource:
-    url: jdbc:postgresql://109.248.203.238:5432/quiz_bot?characterEncoding=utf8
+    url: jdbc:postgresql://${pg.host}:5432/${pg.schema}
     username: ${pg.user}
     password: ${pg.pass}
