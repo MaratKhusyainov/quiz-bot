@@ -7,7 +7,7 @@ import ru.gb.questionapi.domain.Question;
 import ru.gb.questionapi.dto.QuestionDto;
 import ru.gb.questionapi.exceptions.QuestionNotFoundException;
 
-import static ru.gb.questionapi.SendRequest.*;
+import static ru.gb.questionapi.SendRequest.takeNewQuestionWithAnswers;
 
 
 @Service
