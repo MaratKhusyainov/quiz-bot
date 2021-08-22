@@ -14,6 +14,7 @@ public class ResponseMessage {
 
     private SendMessage sendMessage;
     private Stage buttonStage;
+    private boolean executed;
 
     public ResponseMessage(SendMessage sendMessage) {
         this.sendMessage = sendMessage;

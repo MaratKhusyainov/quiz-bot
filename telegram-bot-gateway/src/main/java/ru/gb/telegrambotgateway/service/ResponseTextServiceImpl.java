@@ -6,6 +6,11 @@ import org.springframework.stereotype.Component;
 public class ResponseTextServiceImpl implements ResponseTextService {
 
     @Override
+    public String getStart() {
+        return "Привет!";
+    }
+
+    @Override
     public String getDailyRating(Long chatId) {
         return  "Рейтинг за день для " + chatId + System.lineSeparator() +
                 "Рейтинг за день" + System.lineSeparator() +
