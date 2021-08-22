@@ -9,5 +9,3 @@ spring:
     url: jdbc:postgresql://${pg.host}:5432/${pg.schema}
     username: ${pg.user}
     password: ${pg.pass}
-  test:
-    test1: ${pg.test1}
