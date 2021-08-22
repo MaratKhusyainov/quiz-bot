@@ -26,9 +26,6 @@ public class PlayButton implements Button {
     }
 
     private InlineKeyboardMarkup setQuestionButtons(Question question) {
-        InlineKeyboardButton questionButton = new InlineKeyboardButton();
-        questionButton.setText(question.getQuestion());
-        questionButton.setCallbackData(question.getQuestion());
         InlineKeyboardButton answer1Button = new InlineKeyboardButton();
         answer1Button.setText(question.getAnswer1());
         answer1Button.setCallbackData(question.getAnswer1());
@@ -47,14 +44,12 @@ public class PlayButton implements Button {
         Collections.shuffle(buttons);
 
         List<InlineKeyboardButton> row1 = new ArrayList<>();
-        row1.add(questionButton);
+        Collections.addAll(row1, buttons.get(0), buttons.get(1));
         List<InlineKeyboardButton> row2 = new ArrayList<>();
-        Collections.addAll(row2, buttons.get(0), buttons.get(1));
-        List<InlineKeyboardButton> row3 = new ArrayList<>();
-        Collections.addAll(row3, buttons.get(2), buttons.get(3));
+        Collections.addAll(row2, buttons.get(2), buttons.get(3));
 
         List<List<InlineKeyboardButton>> rows = new ArrayList<>();
-        Collections.addAll(rows, row1, row2, row3);
+        Collections.addAll(rows, row1, row2);
 
         InlineKeyboardMarkup markup = new InlineKeyboardMarkup();
         markup.setKeyboard(rows);

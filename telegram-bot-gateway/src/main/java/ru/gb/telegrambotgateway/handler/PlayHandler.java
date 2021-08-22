@@ -21,21 +21,11 @@ public class PlayHandler implements Handler {
         ResponseMessage responseMessage = getResponseMessage(chatId);
         if (text.equals(question.getAnswer1())) {
             responseMessage.getSendMessage().setText("Правильно!");
-            responseMessage.setButtonStage(Stage.ANSWER);
-            questionService.answer(chatId);
-        } else if (text.equals(question.getAnswer2()) ||
-                text.equals(question.getAnswer3()) ||
-                text.equals(question.getAnswer4())) {
-            responseMessage.getSendMessage().setText("Неправильно, правильный ответ:" + System.lineSeparator() + question.getAnswer1());
-            responseMessage.setButtonStage(Stage.ANSWER);
-            questionService.answer(chatId);
-        } else if (text.equals("Назад")) {
-            responseMessage.getSendMessage().setText("Возврат");
-            responseMessage.setButtonStage(Stage.MAIN);
         } else {
-            responseMessage.getSendMessage().setText("Необходимо ответить на вопрос");
-            responseMessage.setButtonStage(Stage.PLAY);
+            responseMessage.getSendMessage().setText("Неправильно, правильный ответ:" + System.lineSeparator() + question.getAnswer1());
         }
+        responseMessage.setButtonStage(Stage.ANSWER);
+        questionService.answer(chatId);
 
         return responseMessage;
     }
