@@ -1,8 +1,6 @@
 package ru.gb.questionapi.domain;
 
 import lombok.*;
-import ru.gb.questionapi.parsing.QuestionWithAnswers;
-
 import javax.persistence.*;
 
 
@@ -12,12 +10,12 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class Question extends QuestionWithAnswers {
+public class Question  {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private Long id1;
+    private Long id;
 
     @Column(name = "question")
     private String question;

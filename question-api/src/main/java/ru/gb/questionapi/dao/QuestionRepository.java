@@ -26,4 +26,6 @@ public interface QuestionRepository extends JpaRepository<Question, Long> {
 
     @Query(value = queryFindOnlyOneNoUseQuestion, nativeQuery = true)
     Question findOneNewQuestion(@Param("chatId") Long id);
+
+    Question findByHash(int hash);
 }

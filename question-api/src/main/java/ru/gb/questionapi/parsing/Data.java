@@ -7,5 +7,4 @@ public class Data {
 
     String question;
     String [] answers;
-
 }

@@ -2,19 +2,15 @@ package ru.gb.questionapi.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import ru.gb.questionapi.dao.UserRepository;
 import ru.gb.questionapi.domain.User;
 import ru.gb.questionapi.dto.UserDto;
 import ru.gb.questionapi.exceptions.UserNotFoundException;
-import ru.gb.questionapi.mapper.UserMapper;
 
 @Service
 public class UserService {
     @Autowired
     private UserRepository userRepository;
-
-    private final UserMapper mapper = UserMapper.MAPPER;
 
     public void setUserRepository(UserRepository userRepository) {
         this.userRepository = userRepository;
@@ -30,8 +26,15 @@ public class UserService {
 
     public void saveOrUpdate(UserDto userDto) {
         if(userRepository.findByChatId(userDto.getChatId()) == null){
-            User user = mapper.toUser(userDto);
+            System.out.println("Такого пользователя нет");
+            User user = User.builder()
+                    .chatId(userDto.getChatId())
+                    .login(userDto.getLogin())
+                    .name(userDto.getName())
+                    .build();
             userRepository.save(user);
+        } else {
+            System.out.println("Такой пользователь существует");
         }
     }
 }
