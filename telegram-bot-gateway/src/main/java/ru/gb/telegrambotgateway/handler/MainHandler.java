@@ -2,6 +2,7 @@ package ru.gb.telegrambotgateway.handler;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import org.telegram.telegrambots.meta.api.objects.User;
 import ru.gb.telegrambotgateway.model.ResponseMessage;
 import ru.gb.telegrambotgateway.model.Stage;
 import ru.gb.telegrambotgateway.service.ResponseTextService;
@@ -13,8 +14,8 @@ public class MainHandler implements Handler {
     private final ResponseTextService textService;
 
     @Override
-    public ResponseMessage handle(Long chatId, String text) {
-        ResponseMessage responseMessage = getResponseMessage(chatId);
+    public ResponseMessage handle(User user, String text) {
+        ResponseMessage responseMessage = getResponseMessage(user.getId());
         switch (text) {
             case "Играть":
                 responseMessage.getSendMessage().setText("10");

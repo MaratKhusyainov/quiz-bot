@@ -16,10 +16,10 @@ import org.springframework.data.redis.serializer.GenericToStringSerializer;
 @ComponentScan("ru.gb.telegrambotgateway")
 public class RedisConfig {
 
-    @Value("${redis.host}")
+    @Value("${project.redis.host}")
     String redisHost;
 
-    @Value("${redis.port}")
+    @Value("${project.redis.port}")
     int redisPort;
 
     @Bean

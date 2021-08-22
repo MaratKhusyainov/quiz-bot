@@ -12,6 +12,7 @@ import org.telegram.telegrambots.meta.api.methods.updatingmessages.EditMessageTe
 import org.telegram.telegrambots.meta.api.objects.InputFile;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
+import org.telegram.telegrambots.meta.api.objects.User;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import ru.gb.telegrambotgateway.button.Button;
@@ -19,7 +20,7 @@ import ru.gb.telegrambotgateway.factory.ButtonFactory;
 import ru.gb.telegrambotgateway.factory.HandlerFactory;
 import ru.gb.telegrambotgateway.handler.CommandHandler;
 import ru.gb.telegrambotgateway.handler.Handler;
-import ru.gb.telegrambotgateway.model.Question;
+import ru.gb.telegrambotgateway.model.QuestionDto;
 import ru.gb.telegrambotgateway.model.ResponseMessage;
 import ru.gb.telegrambotgateway.model.Stage;
 import ru.gb.telegrambotgateway.model.ThreadState;
@@ -66,14 +67,15 @@ public class Bot extends TelegramLongPollingBot {
             String text;
 
             if (update.hasCallbackQuery()) {
+                User user = update.getCallbackQuery().getFrom();
                 chatId = update.getCallbackQuery().getFrom().getId();
                 text = update.getCallbackQuery().getData();
-                responseMessage = commandHandler.handle(chatId, text);
+                responseMessage = commandHandler.handle(user, text);
 
                 if (!responseMessage.isExecuted()) {
                     Stage stage = stageService.getByChatId(chatId);
                     Handler handler = handlerFactory.getHandler(stage);
-                    responseMessage = handler.handle(chatId, text);
+                    responseMessage = handler.handle(user, text);
                 }
                 threads.get(chatId).setStop(true);
 
@@ -81,9 +83,10 @@ public class Bot extends TelegramLongPollingBot {
                 Button button = buttonFactory.getButtons(responseMessage.getButtonStage());
                 button.setButton(responseMessage.getSendMessage());
             } else {
+                User user = update.getMessage().getFrom();
                 chatId = update.getMessage().getChatId();
                 text = update.getMessage().getText();
-                responseMessage = commandHandler.handle(chatId, text);
+                responseMessage = commandHandler.handle(user, text);
 
                 if (responseMessage.isExecuted()) {
                     ThreadState threadState = threads.get(chatId);
@@ -96,7 +99,7 @@ public class Bot extends TelegramLongPollingBot {
                         return;
                     }
                     Handler handler = handlerFactory.getHandler(stage);
-                    responseMessage = handler.handle(chatId, text);
+                    responseMessage = handler.handle(user, text);
                 }
 
                 stageService.save(chatId, responseMessage.getButtonStage());
@@ -153,12 +156,16 @@ public class Bot extends TelegramLongPollingBot {
     }
 
     private void sendQuestion(Long chatId) throws TelegramApiException {
-        Question question = questionService.getQuestion(chatId);
-        String questionText = question.getQuestion();
+        QuestionDto questionDto = questionService.getQuestion(chatId);
+        String questionText = questionDto.getQuestion();
         SendPhoto sendPhoto = new SendPhoto();
         sendPhoto.setChatId(String.valueOf(chatId));
         File img = new File("C:\\Java\\Projects\\quiz-bot\\telegram-bot-gateway\\src\\main\\resources\\1.jpg");
         sendPhoto.setPhoto(new InputFile(img));
         execute(sendPhoto);
+        SendMessage sendMessage = new SendMessage();
+        sendMessage.setChatId(String.valueOf(chatId));
+        sendMessage.setText("(Текст вопроса временно тут) " + questionDto.getQuestion());
+        execute(sendMessage);
     }
 }

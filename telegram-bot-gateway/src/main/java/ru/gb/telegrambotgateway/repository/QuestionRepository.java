@@ -1,12 +1,12 @@
 package ru.gb.telegrambotgateway.repository;
 
-import ru.gb.telegrambotgateway.model.Question;
+import ru.gb.telegrambotgateway.model.QuestionDto;
 
 public interface QuestionRepository {
 
-    Question getByChatId(Long chatId);
+    QuestionDto getByChatId(Long chatId);
 
-    void save(Long chatId, Question question);
+    void save(Long chatId, QuestionDto questionDto);
 
     void delete(Long chatId);
 }

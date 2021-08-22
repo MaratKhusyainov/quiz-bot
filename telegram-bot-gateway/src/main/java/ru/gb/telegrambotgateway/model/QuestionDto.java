@@ -5,15 +5,13 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Question implements Serializable {
+public class QuestionDto implements Serializable {
     private Long questionId;
     private String question;
-    private String answer1;
-    private String answer2;
-    private String answer3;
-    private String answer4;
+    private List<String> answers;
 }

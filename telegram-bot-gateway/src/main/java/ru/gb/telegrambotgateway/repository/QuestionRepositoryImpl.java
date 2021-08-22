@@ -3,23 +3,23 @@ package ru.gb.telegrambotgateway.repository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.stereotype.Repository;
-import ru.gb.telegrambotgateway.model.Question;
+import ru.gb.telegrambotgateway.model.QuestionDto;
 
 @RequiredArgsConstructor
 @Repository
 public class QuestionRepositoryImpl implements QuestionRepository {
 
     private static final String KEY = "Question";
-    private final HashOperations<String, Long, Question> hashOperations;
+    private final HashOperations<String, Long, QuestionDto> hashOperations;
 
     @Override
-    public Question getByChatId(Long chatId) {
-        return (Question) hashOperations.get(KEY, chatId);
+    public QuestionDto getByChatId(Long chatId) {
+        return (QuestionDto) hashOperations.get(KEY, chatId);
     }
 
     @Override
-    public void save(Long chatId, Question question) {
-        hashOperations.put(KEY, chatId, question);
+    public void save(Long chatId, QuestionDto questionDto) {
+        hashOperations.put(KEY, chatId, questionDto);
     }
 
     @Override

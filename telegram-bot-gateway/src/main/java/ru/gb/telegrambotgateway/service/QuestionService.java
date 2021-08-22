@@ -1,15 +1,15 @@
 package ru.gb.telegrambotgateway.service;
 
-import ru.gb.telegrambotgateway.model.Question;
+import ru.gb.telegrambotgateway.model.QuestionDto;
 
 public interface QuestionService {
-    Question getQuestion(Long chatId);
+    QuestionDto getQuestion(Long chatId);
 
-    void answer(Long chatId);
+    void answer(Long chatId, QuestionDto question, boolean isCorrect);
 
-    Question getByChatId(Long chatId);
+    QuestionDto getByChatId(Long chatId);
 
-    void save(Long chatId, Question question);
+    void save(Long chatId, QuestionDto questionDto);
 
     void delete(Long chatId);
 }
