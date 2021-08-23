@@ -1,10 +1,7 @@
 package ru.gb.questionapi.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ru.gb.questionapi.dto.QuestionDto;
 import ru.gb.questionapi.services.QuestionService;
 
@@ -22,4 +19,10 @@ public class QuestionsController {
     public QuestionDto getOneQuestionWithAnswers(@PathVariable Long id){
         return questionService.findNewQuestion(id);
     }
+
+    @GetMapping("/new/{difficult}/{quantity}")
+    public void getAndSaveNewQuestionWithAnswers(@PathVariable int difficult, @PathVariable int quantity){
+        questionService.getAndSaveUniqueNewQuestionsWithAnswersInDB(difficult, quantity);
+    }
+
 }

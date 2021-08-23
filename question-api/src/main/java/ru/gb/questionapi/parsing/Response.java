@@ -1,10 +1,6 @@
 package ru.gb.questionapi.parsing;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
+import lombok.*;
 import java.util.List;
 
 @Getter
@@ -15,5 +11,5 @@ public class Response {
 
     private List<QuestionWithAnswers> data;
     private Boolean ok;
-    private int amount;
+    private float amount;
 }

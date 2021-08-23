@@ -1,20 +1,34 @@
 package ru.gb.questionapi.services;
 
+import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 import ru.gb.questionapi.dao.QuestionRepository;
 import ru.gb.questionapi.domain.Question;
 import ru.gb.questionapi.dto.QuestionDto;
 import ru.gb.questionapi.exceptions.QuestionNotFoundException;
-
-import static ru.gb.questionapi.SendRequest.takeNewQuestionWithAnswers;
-
+import ru.gb.questionapi.parsing.Response;
 
 @Service
 public class QuestionService {
 
     @Autowired
     private QuestionRepository questionRepository;
+    @Autowired
+    private static Gson gson;
+
+    private final int QUANTITY_QUESTIONS = 5; // количество запрашиваемых вопросов за одни раз - ограничено API ресурса
+
+    public int chooseDifficultQuestionsMode(){
+        int easy = 1;
+        int hard = 3;
+        return (easy + (int) (Math.random() * hard));
+    }
 
     public void setQuestionRepository(QuestionRepository questionRepository) {
         this.questionRepository = questionRepository;
@@ -29,15 +43,16 @@ public class QuestionService {
     }
 
     public Question findByHash(int hash){
-
         return questionRepository.findByHash(hash);
     }
 
     public QuestionDto findNewQuestion(Long chatId){
         Question newQuestion = questionRepository.findOneNewQuestion(chatId);
-        if (newQuestion == null) {
-            System.out.println("Вопросы кончились, запрашиваю новый вопрос");
-            takeNewQuestionWithAnswers(1,1);
+
+        while(newQuestion == null){
+            System.out.println("Вопросы кончились, запрашиваю новые вопросы");
+            getAndSaveUniqueNewQuestionsWithAnswersInDB(chooseDifficultQuestionsMode(), QUANTITY_QUESTIONS);
+            newQuestion = questionRepository.findOneNewQuestion(chatId);
         }
 
         String [] answers = new String [] {newQuestion.getAnswer1(), newQuestion.getAnswer2(), newQuestion.getAnswer3(), newQuestion.getAnswer4()};
@@ -47,5 +62,46 @@ public class QuestionService {
                 .answers(answers)
                 .build();
         return questionDto;
+    }
+
+    public void getAndSaveUniqueNewQuestionsWithAnswersInDB(int difficult, int quantity){
+        String apikey = "431c885cbba306fb1eb5974b0";
+        int savedQuestionCounter = 0;
+
+        String r = sendGet(difficult, quantity, apikey);
+        Gson gson = new Gson();
+        Response response = gson.fromJson(r, Response.class);
+
+        for (int i = 0; i < quantity; i++) {
+            String[] answers = response.getData().get(i).getAnswers();
+            Question question = new Question();
+            question.setQuestion(response.getData().get(i).getQuestion());
+            question.setAnswer1(answers[0]);
+            question.setAnswer2(answers[1]);
+            question.setAnswer3(answers[2]);
+            question.setAnswer4(answers[3]);
+            question.setComplexity(difficult);
+            question.setHash(answers[0].hashCode());
+
+            if (isQuestionInDB(question.getHash())){
+                questionRepository.save(question);
+                savedQuestionCounter++;
+            }
+        }
+        System.out.println("Записано " + savedQuestionCounter + " новых вопросов из " + quantity + " полученных");
+    }
+
+    public boolean isQuestionInDB(int hash){
+        if (questionRepository.findByHash(hash) == null) return true;
+        else return false;
+    }
+
+    public String sendGet(int difficult, int quantity, String apikey){
+        RestTemplate restTemplate = new RestTemplate();
+        HttpHeaders headers = new HttpHeaders();
+        HttpEntity<String> entity = new HttpEntity<String>(headers);
+        ResponseEntity<String> result = restTemplate.exchange("https://engine.lifeis.porn/api/millionaire.php?qType={difficult}&count={quantity}&apikey={apikey}", HttpMethod.GET, entity, String.class, difficult, quantity, apikey);
+        System.out.println(result.getStatusCode());
+        return result.getBody();
     }
 }
