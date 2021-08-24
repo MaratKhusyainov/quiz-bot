@@ -26,6 +26,7 @@ import ru.gb.telegrambotgateway.model.Stage;
 import ru.gb.telegrambotgateway.model.ThreadState;
 import ru.gb.telegrambotgateway.service.ImageService;
 import ru.gb.telegrambotgateway.service.QuestionService;
+import ru.gb.telegrambotgateway.service.ResponseTextService;
 import ru.gb.telegrambotgateway.service.StageService;
 
 import java.io.File;
@@ -43,6 +44,7 @@ public class Bot extends TelegramLongPollingBot {
     private final StageService stageService;
     private final QuestionService questionService;
     private final ImageService imageService;
+    private final ResponseTextService textService;
     private final CommandHandler commandHandler;
     private final Map<Long, ThreadState> threads = new HashMap<>();
 
@@ -143,7 +145,7 @@ public class Bot extends TelegramLongPollingBot {
                         if (i == 0) {
                             SendMessage sendMessage = new SendMessage();
                             sendMessage.setChatId(String.valueOf(chatId));
-                            sendMessage.setText("Время истекло");
+                            sendMessage.setText(textService.getTimeOut());
                             questionService.answer(message.getChatId(), questionService.getByChatId(message.getChatId()), false);
                             execute(sendMessage);
                         }
