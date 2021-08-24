@@ -1,6 +1,7 @@
 package ru.gb.telegrambotgateway.handler;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.objects.User;
 import ru.gb.telegrambotgateway.model.ResponseMessage;
@@ -13,12 +14,15 @@ public class MainHandler implements Handler {
 
     private final ResponseTextService textService;
 
+    @Value("${question.time}")
+    private int questionTime;
+
     @Override
     public ResponseMessage handle(User user, String text) {
         ResponseMessage responseMessage = getResponseMessage(user.getId());
         switch (text) {
             case "Следующий вопрос ⏳":
-                responseMessage.getSendMessage().setText("30");
+                responseMessage.getSendMessage().setText(String.valueOf(questionTime));
                 responseMessage.setButtonStage(Stage.PLAY);
                 break;
             case "Рейтинг \uD83C\uDFC6":
