@@ -26,9 +26,6 @@ public class User {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "total_rating")
-    private int rating;
-
     @Column(name = "chat_id")
     private Long chatId;
 
