@@ -19,7 +19,6 @@ public class StageServiceImpl implements StageService {
     public Stage getByChatId(Long chatId) {
         Stage stage = stageRepository.getByChatId(chatId);
         if (stage == null) {
-            System.out.println("stage is null");
             stage = Stage.MAIN;
             save(chatId, stage);
         }

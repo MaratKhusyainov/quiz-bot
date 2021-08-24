@@ -24,10 +24,13 @@ import ru.gb.telegrambotgateway.model.QuestionDto;
 import ru.gb.telegrambotgateway.model.ResponseMessage;
 import ru.gb.telegrambotgateway.model.Stage;
 import ru.gb.telegrambotgateway.model.ThreadState;
+import ru.gb.telegrambotgateway.service.ImageService;
 import ru.gb.telegrambotgateway.service.QuestionService;
+import ru.gb.telegrambotgateway.service.ResponseTextService;
 import ru.gb.telegrambotgateway.service.StageService;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -40,6 +43,8 @@ public class Bot extends TelegramLongPollingBot {
     private final ButtonFactory buttonFactory;
     private final StageService stageService;
     private final QuestionService questionService;
+    private final ImageService imageService;
+    private final ResponseTextService textService;
     private final CommandHandler commandHandler;
     private final Map<Long, ThreadState> threads = new HashMap<>();
 
@@ -48,6 +53,9 @@ public class Bot extends TelegramLongPollingBot {
 
     @Value("${bot.token}")
     String botToken;
+
+    @Value("${question.time}")
+    private int questionTime;
 
     @Override
     public String getBotUsername() {
@@ -127,7 +135,7 @@ public class Bot extends TelegramLongPollingBot {
         editMessage.setReplyMarkup((InlineKeyboardMarkup) responseMessage.getSendMessage().getReplyMarkup());
         Thread thread = new Thread(() -> {
             try {
-                for (int i = 29; i >= 0; i--) {
+                for (int i = questionTime - 1; i >= 0; i--) {
                     if (threads.get(chatId).isStop() || i == 0) {
                         DeleteMessage deleteMessage = new DeleteMessage();
                         deleteMessage.setChatId(String.valueOf(chatId));
@@ -137,7 +145,8 @@ public class Bot extends TelegramLongPollingBot {
                         if (i == 0) {
                             SendMessage sendMessage = new SendMessage();
                             sendMessage.setChatId(String.valueOf(chatId));
-                            sendMessage.setText("Время истекло");
+                            sendMessage.setText(textService.getTimeOut());
+                            questionService.answer(message.getChatId(), questionService.getByChatId(message.getChatId()), false);
                             execute(sendMessage);
                         }
                         return;
@@ -155,17 +164,13 @@ public class Bot extends TelegramLongPollingBot {
         thread.start();
     }
 
-    private void sendQuestion(Long chatId) throws TelegramApiException {
+    private void sendQuestion(Long chatId) throws TelegramApiException, IOException {
         QuestionDto questionDto = questionService.getQuestion(chatId);
-        String questionText = questionDto.getQuestion();
+        File output = imageService.createImage(questionDto.getQuestion());
         SendPhoto sendPhoto = new SendPhoto();
         sendPhoto.setChatId(String.valueOf(chatId));
-        File img = new File("C:\\Java\\Projects\\quiz-bot\\telegram-bot-gateway\\src\\main\\resources\\1.jpg");
-        sendPhoto.setPhoto(new InputFile(img));
+        sendPhoto.setPhoto(new InputFile(output));
         execute(sendPhoto);
-        SendMessage sendMessage = new SendMessage();
-        sendMessage.setChatId(String.valueOf(chatId));
-        sendMessage.setText("(Текст вопроса временно тут) " + questionDto.getQuestion());
-        execute(sendMessage);
     }
+
 }

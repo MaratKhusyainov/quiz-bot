@@ -6,6 +6,8 @@ public interface ResponseTextService {
 
     String getIncorrectAnswer();
 
+    String getTimeOut();
+
     String getStart();
 
     String getDailyRating(Long chatId);
