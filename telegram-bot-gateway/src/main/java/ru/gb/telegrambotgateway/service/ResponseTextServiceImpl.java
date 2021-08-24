@@ -5,6 +5,19 @@ import org.springframework.stereotype.Component;
 @Component
 public class ResponseTextServiceImpl implements ResponseTextService {
 
+    private final String[] correctAnswer = {"И это правильный ответ! \uD83D\uDD25", "Абсолютно верно! \uD83D\uDC4D", "Правильно! \uD83E\uDD17", "Именно так! ☀️", "Молодец! \uD83E\uDD47"};
+    private final String[] incorrectAnswer = {"К сожалению, нет \uD83D\uDC4E", "Неправильно ❌", "Жаль, но ответ неверный \uD83D\uDE14", "Нет, но не расстраивайся! \uD83D\uDE43"};
+
+    @Override
+    public String getCorrectAnswer() {
+        return correctAnswer[(int) (Math.random() * correctAnswer.length)];
+    }
+
+    @Override
+    public String getIncorrectAnswer() {
+        return incorrectAnswer[(int) (Math.random() * incorrectAnswer.length)];
+    }
+
     @Override
     public String getStart() {
         return "Привет!";

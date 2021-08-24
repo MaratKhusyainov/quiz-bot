@@ -11,7 +11,7 @@ public class TotalRatingHandler implements Handler {
     @Override
     public ResponseMessage handle(User user, String text) {
         ResponseMessage responseMessage = getResponseMessage(user.getId());
-        if (text.equals("Назад")) {
+        if (text.equals("Назад ↩️")) {
             responseMessage.getSendMessage().setText("Возврат");
             responseMessage.setButtonStage(Stage.RATING);
         } else {

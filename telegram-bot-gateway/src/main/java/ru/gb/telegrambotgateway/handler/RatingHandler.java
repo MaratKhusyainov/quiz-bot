@@ -17,23 +17,23 @@ public class RatingHandler implements Handler {
     public ResponseMessage handle(User user, String text) {
         ResponseMessage responseMessage = getResponseMessage(user.getId());
         switch (text) {
-            case "День":
+            case "День \uD83D\uDFEA":
                 responseMessage.getSendMessage().setText(textService.getDailyRating(user.getId()));
                 responseMessage.setButtonStage(Stage.DAILY_RATING);
                 break;
-            case "Неделя":
+            case "Неделя \uD83D\uDFE7":
                 responseMessage.getSendMessage().setText(textService.getWeeklyRating(user.getId()));
                 responseMessage.setButtonStage(Stage.WEEKLY_RATING);
                 break;
-            case "Месяц":
+            case "Месяц \uD83D\uDFE9":
                 responseMessage.getSendMessage().setText(textService.getMonthlyRating(user.getId()));
                 responseMessage.setButtonStage(Stage.MONTHLY_RATING);
                 break;
-            case "Общий":
+            case "Общий \uD83D\uDFE6":
                 responseMessage.getSendMessage().setText(textService.getTotalRating(user.getId()));
                 responseMessage.setButtonStage(Stage.TOTAL_RATING);
                 break;
-            case "Назад":
+            case "Назад ↩️":
                 responseMessage.getSendMessage().setText("Возврат в главное меню");
                 responseMessage.setButtonStage(Stage.MAIN);
                 break;
