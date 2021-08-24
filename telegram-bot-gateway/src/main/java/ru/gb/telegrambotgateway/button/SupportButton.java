@@ -15,7 +15,7 @@ public class SupportButton implements Button {
     public void setButton(SendMessage sendMessage) {
         ReplyKeyboardMarkup markup = setReplyKeyboard(sendMessage);
         List<KeyboardRow> keyboardRows = new ArrayList<KeyboardRow>() {{
-            add(new KeyboardRow() {{ add("Назад"); }});
+            add(new KeyboardRow() {{ add("Назад ↩️"); }});
         }};
         markup.setKeyboard(keyboardRows);
     }

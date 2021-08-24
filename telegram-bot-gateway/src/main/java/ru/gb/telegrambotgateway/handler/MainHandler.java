@@ -17,15 +17,15 @@ public class MainHandler implements Handler {
     public ResponseMessage handle(User user, String text) {
         ResponseMessage responseMessage = getResponseMessage(user.getId());
         switch (text) {
-            case "Играть":
-                responseMessage.getSendMessage().setText("10");
+            case "Следующий вопрос ⏳":
+                responseMessage.getSendMessage().setText("30");
                 responseMessage.setButtonStage(Stage.PLAY);
                 break;
-            case "Рейтинг":
+            case "Рейтинг \uD83C\uDFC6":
                 responseMessage.getSendMessage().setText("Рейтинг");
                 responseMessage.setButtonStage(Stage.RATING);
                 break;
-            case "Помощь":
+            case "Помощь ⁉️":
                 responseMessage.getSendMessage().setText(textService.getSupport());
                 responseMessage.setButtonStage(Stage.SUPPORT);
                 break;

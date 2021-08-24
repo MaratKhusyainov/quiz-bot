@@ -127,7 +127,7 @@ public class Bot extends TelegramLongPollingBot {
         editMessage.setReplyMarkup((InlineKeyboardMarkup) responseMessage.getSendMessage().getReplyMarkup());
         Thread thread = new Thread(() -> {
             try {
-                for (int i = 9; i >= 0; i--) {
+                for (int i = 29; i >= 0; i--) {
                     if (threads.get(chatId).isStop() || i == 0) {
                         DeleteMessage deleteMessage = new DeleteMessage();
                         deleteMessage.setChatId(String.valueOf(chatId));

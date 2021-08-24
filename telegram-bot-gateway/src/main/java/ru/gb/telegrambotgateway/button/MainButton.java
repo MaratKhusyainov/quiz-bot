@@ -15,9 +15,9 @@ public class MainButton implements Button {
     public void setButton(SendMessage sendMessage) {
         ReplyKeyboardMarkup markup = setReplyKeyboard(sendMessage);
         List<KeyboardRow> keyboardRows = new ArrayList<KeyboardRow>() {{
-            add(new KeyboardRow() {{ add("Играть"); }});
-            add(new KeyboardRow() {{ add("Рейтинг"); }});
-            add(new KeyboardRow() {{ add("Помощь"); }});
+            add(new KeyboardRow() {{ add("Следующий вопрос ⏳"); }});
+            add(new KeyboardRow() {{ add("Рейтинг \uD83C\uDFC6"); }});
+            add(new KeyboardRow() {{ add("Помощь ⁉️"); }});
         }};
         markup.setKeyboard(keyboardRows);
     }

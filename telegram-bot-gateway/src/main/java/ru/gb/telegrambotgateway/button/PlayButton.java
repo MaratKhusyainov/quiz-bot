@@ -27,16 +27,16 @@ public class PlayButton implements Button {
 
     private InlineKeyboardMarkup setQuestionButtons(QuestionDto questionDto) {
         InlineKeyboardButton answer1Button = new InlineKeyboardButton();
-        answer1Button.setText(questionDto.getAnswers().get(0));
+        answer1Button.setText("\uD83D\uDD34 " + questionDto.getAnswers().get(0));
         answer1Button.setCallbackData(questionDto.getAnswers().get(0));
         InlineKeyboardButton answer2Button = new InlineKeyboardButton();
-        answer2Button.setText(questionDto.getAnswers().get(1));
+        answer2Button.setText("\uD83D\uDFE1 " + questionDto.getAnswers().get(1));
         answer2Button.setCallbackData(questionDto.getAnswers().get(1));
         InlineKeyboardButton answer3Button = new InlineKeyboardButton();
-        answer3Button.setText(questionDto.getAnswers().get(2));
+        answer3Button.setText("\uD83D\uDFE2 " + questionDto.getAnswers().get(2));
         answer3Button.setCallbackData(questionDto.getAnswers().get(2));
         InlineKeyboardButton answer4Button = new InlineKeyboardButton();
-        answer4Button.setText(questionDto.getAnswers().get(3));
+        answer4Button.setText("\uD83D\uDD35 " + questionDto.getAnswers().get(3));
         answer4Button.setCallbackData(questionDto.getAnswers().get(3));
 
         List<InlineKeyboardButton> buttons = new ArrayList<>();

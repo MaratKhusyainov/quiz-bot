@@ -2,6 +2,10 @@ package ru.gb.telegrambotgateway.service;
 
 public interface ResponseTextService {
 
+    String getCorrectAnswer();
+
+    String getIncorrectAnswer();
+
     String getStart();
 
     String getDailyRating(Long chatId);
