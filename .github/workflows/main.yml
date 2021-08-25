@@ -34,8 +34,8 @@ jobs:
         uses: fifsky/ssh-action@master
         with:
           command: |
-            cd /tmp
-            ls -a
+            cd ~/projects
+            mkdir test
           host: ${{ secrets.DEPLOY_SERVER_HOST }}
           user: root
           key: ${{ secrets.DEPLOY_SERVER_KEY}}
