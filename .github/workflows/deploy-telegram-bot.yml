@@ -38,6 +38,7 @@ jobs:
       - name: Run a one-line script
         run: |
           echo "files"
+          cd telegram-bot-gateway
           ls -a
           
 #       - name: Build and push
