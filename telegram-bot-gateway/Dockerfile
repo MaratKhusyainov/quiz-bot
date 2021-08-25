@@ -1,6 +1,7 @@
 FROM openjdk:8-jre-alpine
-RUN apk update; apk add fontconfig fonts-liberation
-RUN fc-cache -f -v
+RUN apk --no-cache add msttcorefonts-installer fontconfig && \
+    update-ms-fonts && \
+    fc-cache -f
 #RUN apk add font-noto-gujarati font-noto-kannada font-noto-avestan font-noto-osage font-noto-kayahli font-noto-oriya font-noto-telugu font-noto-tamil font-noto-bengali font-noto-malayalam font-noto-arabic font-noto-extra \
 #    && fc-cache -f
 WORKDIR /telegram-bot-gateway
