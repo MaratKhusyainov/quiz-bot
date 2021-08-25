@@ -40,6 +40,9 @@ jobs:
           echo "files"
           cd telegram-bot-gateway
           ls
+          echo "files"
+          cd target
+          ls
           
 #       - name: Build and push
 #         id: docker_build
