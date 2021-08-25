@@ -48,9 +48,9 @@ jobs:
         with:
           command: |
             docker login -u ${{ secrets.DOCKER_HUB_USERNAME }} -p ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
-            docker ps | grep "mxpnk/question-api" | awk '{ print $1 }' | xargs docker stop
-            docker ps -a | grep "mxpnk/question-api" | awk '{ print $1 }' | xargs docker container rm
-            docker image ls | grep "mxpnk/question-api" | awk '{ print $3 }' | xargs docker rmi
+            docker ps | grep "mxpnk/telegram-bot-gateway" | awk '{ print $1 }' | xargs docker stop
+            docker ps -a | grep "mxpnk/telegram-bot-gateway" | awk '{ print $1 }' | xargs docker container rm
+            docker image ls | grep "mxpnk/telegram-bot-gateway" | awk '{ print $3 }' | xargs docker rmi
             docker pull mxpnk/telegram-bot-gateway
             docker run -d -p 9090:9090 mxpnk/telegram-bot-gateway
             docker logout
