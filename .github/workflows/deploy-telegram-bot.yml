@@ -19,16 +19,23 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
       
-      - name: Create secret
-        uses: "finnp/create-file-action@master"
-        env:
-          FILE_NAME: "telegram-bot-gateway/src/main/resources/${{ secrets.TELEGRAM_BOT_SECRET_NAME }}"
-          FILE_DATA: "${{ secrets.TELEGRAM_BOT_SECRET_VALUE }}"
+#       - name: Create secret
+#         uses: "finnp/create-file-action@master"
+#         env:
+#           FILE_NAME: "telegram-bot-gateway/src/main/resources/${{ secrets.TELEGRAM_BOT_SECRET_NAME }}"
+#           FILE_DATA: "${{ secrets.TELEGRAM_BOT_SECRET_VALUE }}"
           
-      - name: Create file
-        run: |
-          echo ${{ secrets.TELEGRAM_BOT_SECRET_VALUE }} >> telegram-bot-gateway/src/main/resources/${{ secrets.TELEGRAM_BOT_SECRET_NAME }}
-          cat telegram-bot-gateway/src/main/resources/${{ secrets.TELEGRAM_BOT_SECRET_NAME }}
+#       - name: Create file
+#         run: |
+#           echo ${{ secrets.TELEGRAM_BOT_SECRET_VALUE }} >> telegram-bot-gateway/src/main/resources/${{ secrets.TELEGRAM_BOT_SECRET_NAME }}
+#           cat telegram-bot-gateway/src/main/resources/${{ secrets.TELEGRAM_BOT_SECRET_NAME }}
+
+      - uses: 1arp/create-a-file-action@0.2
+        with:
+          path: 'telegram-bot-gateway/src/main/resources/'
+          file: '${{ secrets.TELEGRAM_BOT_SECRET_NAME }}'
+          content: |
+            ${{ secrets.TELEGRAM_BOT_SECRET_VALUE }}
           
       - name: Run a one-line script
         run: |
