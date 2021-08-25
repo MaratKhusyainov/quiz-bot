@@ -49,7 +49,9 @@ jobs:
         with:
           command: |
             docker login -u ${{ secrets.DOCKER_HUB_USERNAME }} -p ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
-            docker stop mxpnk/question-api || true
+            docker ps | grep "mxpnk/question-api" | awk '{ print $1 }' | xargs docker stop
+            docker ps -a | grep "mxpnk/question-api" | awk '{ print $1 }' | xargs docker container rm
+            docker image ls | grep "mxpnk/question-api" | awk '{ print $3 }' | xargs docker rmi
             docker pull mxpnk/question-api
             docker run -d -p 8080:8080 mxpnk/question-api
             docker logout
