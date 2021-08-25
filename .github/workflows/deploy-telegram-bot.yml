@@ -11,7 +11,7 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Create secret
-      - uses: 1arp/create-a-file-action@0.2
+        uses: 1arp/create-a-file-action@0.2
         with:
           path: 'telegram-bot-gateway/src/main/resources/'
           file: '${{ secrets.TELEGRAM_BOT_SECRET_NAME }}'
@@ -19,7 +19,7 @@ jobs:
             ${{ secrets.TELEGRAM_BOT_SECRET_VALUE }}
 
       - name: Setup Java
-      - uses: actions/setup-java@v2
+        uses: actions/setup-java@v2
         with:
           distribution: 'temurin'
           java-version: '8'
