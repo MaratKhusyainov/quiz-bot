@@ -25,12 +25,11 @@ jobs:
           FILE_NAME: "telegram-bot-gateway/src/main/resources/${{ secrets.TELEGRAM_BOT_SECRET_NAME }}"
           FILE_DATA: "${{ secrets.TELEGRAM_BOT_SECRET_VALUE }}"
         
-#        - name: Add secret
-#         run: |
-#           cd telegram-bot-gateway/src/main/resources
-#           touch ${{ secrets.TELEGRAM_BOT_SECRET_NAME }}
-#           ${{ secrets.TELEGRAM_BOT_SECRET_VALUE }} > ${{ secrets.TELEGRAM_BOT_SECRET_NAME }}
-#          cat ${{ secrets.TELEGRAM_BOT_SECRET_NAME }}
+
+      
+      - name: Add secret
+        run: |
+            cat telegram-bot-gateway/src/main/resources/telegram-bot-secret.properties
       
 #       - uses: actions/setup-java@v2
 #         with:
