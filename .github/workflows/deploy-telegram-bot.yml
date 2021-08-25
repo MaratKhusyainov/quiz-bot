@@ -20,7 +20,7 @@ jobs:
       - uses: actions/checkout@v2
       
       - name: Create secret
-      - uses: "finnp/create-file-action@master"
+        uses: "finnp/create-file-action@master"
         env:
           FILE_NAME: "telegram-bot-gateway/src/main/resources/${{ secrets.TELEGRAM_BOT_SECRET_NAME }}"
           FILE_DATA: "${{ secrets.TELEGRAM_BOT_SECRET_VALUE }}"
