@@ -19,6 +19,12 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
       
+      - name: Create secret
+        uses: "finnp/create-file-action@master"
+        env:
+          FILE_NAME: "telegram-bot-gateway/src/main/resources/${{ secrets.TELEGRAM_BOT_SECRET_NAME }}"
+          FILE_DATA: "${{ secrets.TELEGRAM_BOT_SECRET_VALUE }}"
+      
       - uses: actions/setup-java@v2
         with:
           distribution: 'temurin'
@@ -35,14 +41,14 @@ jobs:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
           
-      - name: Run a one-line script
-        run: |
-          echo "files"
-          cd telegram-bot-gateway
-          ls
-          echo "files"
-          cd target
-          ls
+#       - name: Run a one-line script
+#         run: |
+#           echo "files"
+#           cd telegram-bot-gateway
+#           ls
+#           echo "files"
+#           cd target
+#           ls
           
       - name: Build and push
         id: docker_build
@@ -54,12 +60,15 @@ jobs:
           tags: ${{ secrets.DOCKER_HUB_USERNAME }}/telegram-bot-gateway:latest
 
       # Runs a set of commands using the runners shell
-#       - name: ls -a via ssh
-#         uses: fifsky/ssh-action@master
-#         with:
-#           command: |
-#             cd ~/projects
-#             mkdir test
-#           host: ${{ secrets.DEPLOY_SERVER_HOST }}
-#           user: root
-#           key: ${{ secrets.DEPLOY_SERVER_KEY}}
+      - name: deploy
+        uses: fifsky/ssh-action@master
+        with:
+          command: |
+            docker login -u ${{ secrets.DOCKER_HUB_USERNAME }} -p ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+            docker stop telegram-bot-gateway || true
+            docker pull mxpnk/telegram-bot-gateway
+            docker run -d --network my_network mxpnk/telegram-bot-gateway
+            docker logout
+          host: ${{ secrets.DEPLOY_SERVER_HOST }}
+          user: root
+          key: ${{ secrets.DEPLOY_SERVER_KEY}}
