@@ -50,7 +50,7 @@ jobs:
             docker login -u ${{ secrets.DOCKER_HUB_USERNAME }} -p ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
             docker stop mxpnk/telegram-bot-gateway || true
             docker pull mxpnk/telegram-bot-gateway
-            docker run -d --network my_network mxpnk/telegram-bot-gateway
+            docker run -d -p 9090:9090 mxpnk/telegram-bot-gateway
             docker logout
           host: ${{ secrets.DEPLOY_SERVER_HOST }}
           user: root
