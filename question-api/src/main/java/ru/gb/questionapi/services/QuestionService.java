@@ -22,7 +22,8 @@ public class QuestionService {
     @Autowired
     private static Gson gson;
 
-    private final int QUANTITY_QUESTIONS = 5; // количество запрашиваемых вопросов за одни раз - ограничено API ресурса
+    private final int QUANTITY_QUESTIONS = 5;// количество запрашиваемых вопросов за одни раз - ограничено API ресурса
+    private final String APIKEY = "431c885cbba306fb1eb5974b0"; // apikey, который выдается ресурсом
 
     public int chooseDifficultQuestionsMode(){
         int easy = 1;
@@ -65,10 +66,8 @@ public class QuestionService {
     }
 
     public void getAndSaveUniqueNewQuestionsWithAnswersInDB(int difficult, int quantity){
-        String apikey = "431c885cbba306fb1eb5974b0";
         int savedQuestionCounter = 0;
-
-        String r = sendGet(difficult, quantity, apikey);
+        String r = sendGet(difficult, quantity, APIKEY);
         Gson gson = new Gson();
         Response response = gson.fromJson(r, Response.class);
 

@@ -31,4 +31,7 @@ public class User {
 
     @OneToMany(mappedBy = "user")
     private List<History> historyList;
+
+    @OneToOne(mappedBy = "user")
+    private Rating rating;
 }
