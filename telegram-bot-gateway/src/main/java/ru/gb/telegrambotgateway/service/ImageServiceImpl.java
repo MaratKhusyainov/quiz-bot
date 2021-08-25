@@ -35,7 +35,7 @@ public class ImageServiceImpl implements ImageService {
 //        image.setImage(ImageIO.read(new ClassPathResource("templates/template.png").getInputStream()));
         image.setImage(ImageIO.read(resourceLoader.getResource("classpath:templates/template.png").getInputStream()));
 
-        Font font = new Font(/*"Bahnschrift SemiBold"*/"ttf-linux-libertine", Font.BOLD, 64);
+        Font font = new Font(/*"Bahnschrift SemiBold"*/"Times New Roman", Font.BOLD, 64);
         int sizeBetweenRows = font.getSize();
         Graphics g = image.getImage().getGraphics();
         FontMetrics ruler = g.getFontMetrics(font);
