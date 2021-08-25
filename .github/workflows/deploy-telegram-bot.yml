@@ -49,7 +49,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: ./
-          file: /telegram-bot-gateway/Dockerfile
+          file: telegram-bot-gateway/Dockerfile
           push: true
           tags: ${{ secrets.DOCKER_HUB_USERNAME }}/telegram-bot-gateway:latest
 
