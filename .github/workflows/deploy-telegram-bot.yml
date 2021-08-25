@@ -19,11 +19,13 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
       
-      - name: Add secret
+    
       - uses: "finnp/create-file-action@master"
         env:
-          FILE_NAME: "${{ secrets.TELEGRAM_BOT_SECRET_NAME }}"
-          FILE_BASE64: "${{ secrets.TELEGRAM_BOT_SECRET_VALUE }}"
+          FILE_NAME: "telegram-bot-gateway/src/main/resources/${{ secrets.TELEGRAM_BOT_SECRET_NAME }}"
+          FILE_DATA: "${{ secrets.TELEGRAM_BOT_SECRET_VALUE }"
+        
+#        - name: Add secret
 #         run: |
 #           cd telegram-bot-gateway/src/main/resources
 #           touch ${{ secrets.TELEGRAM_BOT_SECRET_NAME }}
