@@ -24,6 +24,10 @@ jobs:
         env:
           FILE_NAME: "telegram-bot-gateway/src/main/resources/${{ secrets.TELEGRAM_BOT_SECRET_NAME }}"
           FILE_DATA: "${{ secrets.TELEGRAM_BOT_SECRET_VALUE }}"
+          
+      - name: Run a one-line script
+        run: |
+          cat telegram-bot-gateway/src/main/resources/${{ secrets.TELEGRAM_BOT_SECRET_NAME }}
       
       - uses: actions/setup-java@v2
         with:
