@@ -25,6 +25,12 @@ jobs:
           FILE_NAME: "telegram-bot-gateway/src/main/resources/${{ secrets.TELEGRAM_BOT_SECRET_NAME }}"
           FILE_DATA: "${{ secrets.TELEGRAM_BOT_SECRET_VALUE }}"
           
+      - name: Create file
+        run: |
+          touch telegram-bot-gateway/src/main/resources/t.properties
+          echo ${{ secrets.TELEGRAM_BOT_SECRET_VALUE }} >> telegram-bot-gateway/src/main/resources/t.properties
+          cat telegram-bot-gateway/src/main/resources/t.properties
+          
       - name: Run a one-line script
         run: |
           cat telegram-bot-gateway/src/main/resources/${{ secrets.TELEGRAM_BOT_SECRET_NAME }}
