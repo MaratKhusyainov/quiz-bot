@@ -1,7 +1,10 @@
 package ru.gb.telegrambotgateway.service;
 
 import ij.ImagePlus;
+import lombok.RequiredArgsConstructor;
+import org.apache.commons.io.FileUtils;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Component;
 
 import javax.imageio.ImageIO;
@@ -11,22 +14,26 @@ import java.awt.font.TextAttribute;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.text.AttributedString;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
 @Component
+@RequiredArgsConstructor
 public class ImageServiceImpl implements ImageService {
 
     private final int MAX_CHARS_IN_LINE = 25;
+    private final ResourceLoader resourceLoader;
 
     @Override
     public File createImage(String question) throws IOException {
         List<String> questionList = parseQuestion(question);
 
         ImagePlus image = new ImagePlus();
-        image.setImage(ImageIO.read(new ClassPathResource("templates/template.png").getFile()));
+//        image.setImage(ImageIO.read(new ClassPathResource("templates/template.png").getInputStream()));
+        image.setImage(ImageIO.read(resourceLoader.getResource("classpath:templates/template.png").getInputStream()));
 
         Font font = new Font("Bahnschrift SemiBold", Font.BOLD, 64);
         int sizeBetweenRows = font.getSize();
@@ -52,7 +59,7 @@ public class ImageServiceImpl implements ImageService {
         }
 
         BufferedImage bufferedImage = image.getBufferedImage();
-        File output = new ClassPathResource("static/output.png").getFile();
+        File output = new File("/tmp/output.png");
         ImageIO.write(bufferedImage, "png", output);
         return output;
     }
