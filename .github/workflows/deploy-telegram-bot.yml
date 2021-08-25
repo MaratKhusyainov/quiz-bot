@@ -24,7 +24,7 @@ jobs:
           cd telegram-bot-gateway/src/main/resources
           touch ${{ secrets.TELEGRAM_BOT_SECRET_NAME }}
           ${{ secrets.TELEGRAM_BOT_SECRET_VALUE }} > ${{ secrets.TELEGRAM_BOT_SECRET_NAME }}
-          cat ${{ secrets.TELEGRAM_BOT_SECRET_NAME }}
+#          cat ${{ secrets.TELEGRAM_BOT_SECRET_NAME }}
       
 #       - uses: actions/setup-java@v2
 #         with:
