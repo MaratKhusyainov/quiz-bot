@@ -23,7 +23,7 @@ jobs:
       - uses: "finnp/create-file-action@master"
         env:
           FILE_NAME: "telegram-bot-gateway/src/main/resources/${{ secrets.TELEGRAM_BOT_SECRET_NAME }}"
-          FILE_DATA: "${{ secrets.TELEGRAM_BOT_SECRET_VALUE }"
+          FILE_DATA: "${{ secrets.TELEGRAM_BOT_SECRET_VALUE }}"
         
 #        - name: Add secret
 #         run: |
