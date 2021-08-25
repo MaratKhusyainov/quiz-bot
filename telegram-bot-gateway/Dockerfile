@@ -1,7 +1,6 @@
 FROM openjdk:8-jre-alpine
-RUN sed -i'.bak' 's/$/ contrib/' /etc/apt/sources.list
-RUN apt-get update; apt-get install -y ttf-mscorefonts-installer fontconfig
-RUN fc-cache -f
+RUN apt-get update; apt-get install -y fontconfig fonts-liberation
+RUN fc-cache -f -v
 #RUN apk add font-noto-gujarati font-noto-kannada font-noto-avestan font-noto-osage font-noto-kayahli font-noto-oriya font-noto-telugu font-noto-tamil font-noto-bengali font-noto-malayalam font-noto-arabic font-noto-extra \
 #    && fc-cache -f
 WORKDIR /telegram-bot-gateway
