@@ -27,7 +27,9 @@ public class QuestionServiceImpl implements QuestionService {
         RestTemplate restTemplate = new RestTemplate();
         String url = "http://" + host + ":" + port + "/question/" + chatId;
         ResponseEntity<QuestionDto> responseEntity = restTemplate.getForEntity(url, QuestionDto.class);
-        save(chatId, responseEntity.getBody());
+        if (responseEntity.getBody() != null && responseEntity.getBody().isCanGetQuestion()) {
+            save(chatId, responseEntity.getBody());
+        }
         return responseEntity.getBody();
     }
 
