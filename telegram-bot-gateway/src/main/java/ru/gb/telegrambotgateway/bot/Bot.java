@@ -13,7 +13,6 @@ import org.telegram.telegrambots.meta.api.objects.InputFile;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.api.objects.User;
-import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import ru.gb.telegrambotgateway.button.Button;
 import ru.gb.telegrambotgateway.factory.ButtonFactory;
@@ -24,10 +23,10 @@ import ru.gb.telegrambotgateway.model.QuestionDto;
 import ru.gb.telegrambotgateway.model.ResponseMessage;
 import ru.gb.telegrambotgateway.model.Stage;
 import ru.gb.telegrambotgateway.model.ThreadState;
-import ru.gb.telegrambotgateway.service.ImageService;
-import ru.gb.telegrambotgateway.service.QuestionService;
-import ru.gb.telegrambotgateway.service.ResponseTextService;
-import ru.gb.telegrambotgateway.service.StageService;
+import ru.gb.telegrambotgateway.service.inter.ImageService;
+import ru.gb.telegrambotgateway.service.inter.QuestionService;
+import ru.gb.telegrambotgateway.service.inter.ResponseTextService;
+import ru.gb.telegrambotgateway.service.inter.StageService;
 
 import java.io.File;
 import java.io.IOException;
@@ -117,8 +116,12 @@ public class Bot extends TelegramLongPollingBot {
 
             if (responseMessage.getButtonStage() == Stage.PLAY) {
                 sendQuestion(chatId);
-                Message message = execute(responseMessage.getSendMessage());
-                repeatTimer(responseMessage, message, chatId);
+                SendMessage sendMessage = new SendMessage();
+                sendMessage.setChatId(String.valueOf(chatId));
+                sendMessage.setText(String.valueOf(questionTime));
+                Message timerMsg = execute(sendMessage);
+                Message answersMsg = execute(responseMessage.getSendMessage());
+                repeatTimer(timerMsg, answersMsg, chatId);
             } else {
                 execute(responseMessage.getSendMessage());
             }
@@ -128,25 +131,26 @@ public class Bot extends TelegramLongPollingBot {
         }
     }
 
-    private void repeatTimer(ResponseMessage responseMessage, Message message, Long chatId) {
+    private void repeatTimer(Message timerMsg, Message answersMsg, Long chatId) {
         EditMessageText editMessage = new EditMessageText();
         editMessage.setChatId(String.valueOf(chatId));
-        editMessage.setMessageId(message.getMessageId());
-        editMessage.setReplyMarkup((InlineKeyboardMarkup) responseMessage.getSendMessage().getReplyMarkup());
+        editMessage.setMessageId(timerMsg.getMessageId());
         Thread thread = new Thread(() -> {
             try {
                 for (int i = questionTime - 1; i >= 0; i--) {
                     if (threads.get(chatId).isStop() || i == 0) {
-                        DeleteMessage deleteMessage = new DeleteMessage();
-                        deleteMessage.setChatId(String.valueOf(chatId));
-                        deleteMessage.setMessageId(message.getMessageId());
-                        execute(deleteMessage);
+                        DeleteMessage deleteMsg = new DeleteMessage();
+                        deleteMsg.setChatId(String.valueOf(chatId));
+                        deleteMsg.setMessageId(answersMsg.getMessageId());
+                        execute(deleteMsg);
+                        deleteMsg.setMessageId(timerMsg.getMessageId());
+                        execute(deleteMsg);
                         stageService.save(chatId, Stage.MAIN);
                         if (i == 0) {
                             SendMessage sendMessage = new SendMessage();
                             sendMessage.setChatId(String.valueOf(chatId));
                             sendMessage.setText(textService.getTimeOut());
-                            questionService.answer(message.getChatId(), questionService.getByChatId(message.getChatId()), false);
+                            questionService.answer(answersMsg.getChatId(), questionService.getByChatId(answersMsg.getChatId()), false);
                             execute(sendMessage);
                         }
                         return;

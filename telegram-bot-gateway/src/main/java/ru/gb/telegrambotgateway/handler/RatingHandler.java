@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.objects.User;
 import ru.gb.telegrambotgateway.model.ResponseMessage;
 import ru.gb.telegrambotgateway.model.Stage;
-import ru.gb.telegrambotgateway.service.ResponseTextService;
+import ru.gb.telegrambotgateway.service.inter.ResponseTextService;
 
 @Component
 @RequiredArgsConstructor

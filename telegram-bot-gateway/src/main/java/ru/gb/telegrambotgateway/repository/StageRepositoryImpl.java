@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.stereotype.Repository;
 import ru.gb.telegrambotgateway.model.Stage;
+import ru.gb.telegrambotgateway.repository.inter.StageRepository;
 
 @RequiredArgsConstructor
 @Repository

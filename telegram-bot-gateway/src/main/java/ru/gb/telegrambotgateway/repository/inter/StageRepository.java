@@ -1,4 +1,4 @@
-package ru.gb.telegrambotgateway.repository;
+package ru.gb.telegrambotgateway.repository.inter;
 
 
 import ru.gb.telegrambotgateway.model.Stage;

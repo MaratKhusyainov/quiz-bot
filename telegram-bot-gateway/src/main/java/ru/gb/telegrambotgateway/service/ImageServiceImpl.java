@@ -2,10 +2,9 @@ package ru.gb.telegrambotgateway.service;
 
 import ij.ImagePlus;
 import lombok.RequiredArgsConstructor;
-import org.apache.commons.io.FileUtils;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Component;
+import ru.gb.telegrambotgateway.service.inter.ImageService;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -14,7 +13,6 @@ import java.awt.font.TextAttribute;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.text.AttributedString;
 import java.util.ArrayList;
 import java.util.Comparator;

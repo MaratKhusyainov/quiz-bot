@@ -14,4 +14,5 @@ public class QuestionDto implements Serializable {
     private Long questionId;
     private String question;
     private List<String> answers;
+    private boolean canGetQuestion;
 }

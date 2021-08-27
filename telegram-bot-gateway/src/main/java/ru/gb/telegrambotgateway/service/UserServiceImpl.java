@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 import org.telegram.telegrambots.meta.api.objects.User;
 import ru.gb.telegrambotgateway.dto.UserDto;
+import ru.gb.telegrambotgateway.service.inter.UserService;
 
 @Component
 public class UserServiceImpl implements UserService {

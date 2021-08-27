@@ -5,7 +5,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import ru.gb.telegrambotgateway.model.Stage;
-import ru.gb.telegrambotgateway.repository.StageRepository;
+import ru.gb.telegrambotgateway.repository.inter.StageRepository;
+import ru.gb.telegrambotgateway.service.inter.StageService;
 
 
 @Service

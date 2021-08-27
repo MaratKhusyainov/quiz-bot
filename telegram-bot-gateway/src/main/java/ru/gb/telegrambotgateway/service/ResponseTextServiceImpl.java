@@ -1,9 +1,16 @@
 package ru.gb.telegrambotgateway.service;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import ru.gb.telegrambotgateway.model.RatingDto;
+import ru.gb.telegrambotgateway.service.inter.RatingService;
+import ru.gb.telegrambotgateway.service.inter.ResponseTextService;
 
 @Component
+@RequiredArgsConstructor
 public class ResponseTextServiceImpl implements ResponseTextService {
+
+    private final RatingService ratingService;
 
     private final String[] correctAnswer = {"И это правильный ответ! \uD83D\uDD25", "Абсолютно верно! \uD83D\uDC4D", "Правильно! \uD83E\uDD17", "Именно так! ☀️", "Молодец! \uD83E\uDD47"};
     private final String[] incorrectAnswer = {"К сожалению, нет \uD83D\uDC4E", "Неправильно ❌", "Жаль, но ответ неверный \uD83D\uDE14", "Нет, но не расстраивайся! \uD83D\uDE43", "Увы и ах \uD83D\uDE27"};
@@ -38,30 +45,30 @@ public class ResponseTextServiceImpl implements ResponseTextService {
 
     @Override
     public String getDailyRating(Long chatId) {
-        return  "Рейтинг за день для " + chatId + System.lineSeparator() +
-                "Рейтинг за день" + System.lineSeparator() +
-                "Рейтинг за день";
+        RatingDto ratingDto = ratingService.getDailyRating(chatId);
+        return  "\uD83D\uDFE3 Ты на " + ratingDto.getPlace() + " месте в сегодняшнем рейтинге" + System.lineSeparator() +
+                "\uD83D\uDFE3 Сегодня ты набрал " + ratingDto.getRatingScores() + " очков";
     }
 
     @Override
     public String getWeeklyRating(Long chatId) {
-        return  "Рейтинг за неделю для " + chatId + System.lineSeparator() +
-                "Рейтинг за неделю" + System.lineSeparator() +
-                "Рейтинг за неделю";
+        RatingDto ratingDto = ratingService.getWeeklyRating(chatId);
+        return  "\uD83D\uDFE0 Ты на " + ratingDto.getPlace() + " месте в недельном рейтинге" + System.lineSeparator() +
+                "\uD83D\uDFE0 На текущей неделе ты набрал " + ratingDto.getRatingScores() + " очков";
     }
 
     @Override
     public String getMonthlyRating(Long chatId) {
-        return  "Рейтинг за месяц для " + chatId + System.lineSeparator() +
-                "Рейтинг за месяц" + System.lineSeparator() +
-                "Рейтинг за месяц";
+        RatingDto ratingDto = ratingService.getMonthlyRating(chatId);
+        return  "\uD83D\uDFE2 Ты на " + ratingDto.getPlace() + " месте в месячном рейтинге" + System.lineSeparator() +
+                "\uD83D\uDFE2 В текущем месяце ты набрал " + ratingDto.getRatingScores() + " очков";
     }
 
     @Override
     public String getTotalRating(Long chatId) {
-        return  "Общий рейтинг для " + chatId + System.lineSeparator() +
-                "Общий рейтинг" + System.lineSeparator() +
-                "Общий рейтинг";
+        RatingDto ratingDto = ratingService.getTotalRating(chatId);
+        return  "\uD83D\uDD35 Ты на " + ratingDto.getPlace() + " месте в общем рейтинге" + System.lineSeparator() +
+                "\uD83D\uDD35 Всего ты набрал " + ratingDto.getRatingScores() + " очков";
     }
 
     @Override

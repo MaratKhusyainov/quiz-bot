@@ -7,7 +7,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import ru.gb.telegrambotgateway.model.AnswerDto;
 import ru.gb.telegrambotgateway.model.QuestionDto;
-import ru.gb.telegrambotgateway.repository.QuestionRepository;
+import ru.gb.telegrambotgateway.repository.inter.QuestionRepository;
+import ru.gb.telegrambotgateway.service.inter.QuestionService;
 
 @Service
 @RequiredArgsConstructor
@@ -23,21 +24,11 @@ public class QuestionServiceImpl implements QuestionService {
 
     @Override
     public QuestionDto getQuestion(Long chatId) {
-        /*List<Question> questions = new ArrayList<>();
-        questions.add(new Question(1L, "a", "a1", "a2", "a3", "a4"));
-        questions.add(new Question(2L, "b", "b1", "b2", "b3", "b4"));
-        questions.add(new Question(3L, "c", "c1", "c2", "c3", "c4"));
-        questions.add(new Question(3L, "d", "d1", "d2", "d3", "d4"));
-
-        Question question = getByChatId(chatId);
-        if (question == null) {
-            question = questions.get((int) (Math.random() * 4));
-        }*/
-
         RestTemplate restTemplate = new RestTemplate();
         String url = "http://" + host + ":" + port + "/question/" + chatId;
         ResponseEntity<QuestionDto> responseEntity = restTemplate.getForEntity(url, QuestionDto.class);
         save(chatId, responseEntity.getBody());
+        System.out.println(responseEntity.getBody());
         return responseEntity.getBody();
     }
 

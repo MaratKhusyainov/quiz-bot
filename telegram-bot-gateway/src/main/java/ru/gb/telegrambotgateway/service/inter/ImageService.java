@@ -1,4 +1,4 @@
-package ru.gb.telegrambotgateway.service;
+package ru.gb.telegrambotgateway.service.inter;
 
 import java.io.File;
 import java.io.IOException;

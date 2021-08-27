@@ -1,4 +1,4 @@
-package ru.gb.telegrambotgateway.service;
+package ru.gb.telegrambotgateway.service.inter;
 
 import ru.gb.telegrambotgateway.model.QuestionDto;
 
