@@ -6,7 +6,7 @@ import lombok.Data;
 @Data
 @Builder
 public class RatingDto {
-    private int place;
+    private Integer place;
     private String loginOrName;
     private Long ratingScores;
 }

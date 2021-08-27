@@ -8,6 +8,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import ru.gb.questionapi.dao.HistoryRepository;
 import ru.gb.questionapi.dao.QuestionRepository;
 import ru.gb.questionapi.domain.Question;
 import ru.gb.questionapi.dto.QuestionDto;
@@ -20,10 +21,13 @@ public class QuestionService {
     @Autowired
     private QuestionRepository questionRepository;
     @Autowired
+    private HistoryRepository historyRepository;
+    @Autowired
     private static Gson gson;
 
     private final int QUANTITY_QUESTIONS = 5;// количество запрашиваемых вопросов за одни раз - ограничено API ресурса
     private final String APIKEY = "431c885cbba306fb1eb5974b0"; // apikey, который выдается ресурсом
+    private final int MAXIMUM_QUESTIONS_PER_DAY = 20;
 
     public int chooseDifficultQuestionsMode(){
         int easy = 1;
@@ -33,6 +37,10 @@ public class QuestionService {
 
     public void setQuestionRepository(QuestionRepository questionRepository) {
         this.questionRepository = questionRepository;
+    }
+
+    public void setHistoryRepository(HistoryRepository historyRepository) {
+        this.historyRepository = historyRepository;
     }
 
     public void saveOrUpdate(Question question) {
@@ -47,25 +55,34 @@ public class QuestionService {
         return questionRepository.findByHash(hash);
     }
 
-    public QuestionDto findNewQuestion(Long chatId){
+    public QuestionDto findNewQuestion(Long chatId) {
         Question newQuestion = questionRepository.findOneNewQuestion(chatId);
+        Integer howManyQuestionsUserGetToday = historyRepository.howManyQuestionsUserGetToday(chatId);
 
-        while(newQuestion == null){
-            System.out.println("Вопросы кончились, запрашиваю новые вопросы");
-            getAndSaveUniqueNewQuestionsWithAnswersInDB(chooseDifficultQuestionsMode(), QUANTITY_QUESTIONS);
-            newQuestion = questionRepository.findOneNewQuestion(chatId);
+        if (howManyQuestionsUserGetToday <= MAXIMUM_QUESTIONS_PER_DAY) {
+            while (newQuestion == null) {
+                getAndSaveUniqueNewQuestionsWithAnswersInDB(chooseDifficultQuestionsMode(), QUANTITY_QUESTIONS);
+                newQuestion = questionRepository.findOneNewQuestion(chatId);
+            }
+
+            String[] answers = new String[]{newQuestion.getAnswer1(), newQuestion.getAnswer2(), newQuestion.getAnswer3(), newQuestion.getAnswer4()};
+            return QuestionDto.builder()
+                    .questionId(newQuestion.getId())
+                    .question(newQuestion.getQuestion())
+                    .answers(answers)
+                    .canGetQuestion(true)
+                    .build();
+        } else {
+            return QuestionDto.builder()
+                    .questionId(null)
+                    .question(null)
+                    .answers(null)
+                    .canGetQuestion(false)
+                    .build();
         }
-
-        String [] answers = new String [] {newQuestion.getAnswer1(), newQuestion.getAnswer2(), newQuestion.getAnswer3(), newQuestion.getAnswer4()};
-        QuestionDto questionDto = QuestionDto.builder()
-                .questionId(newQuestion.getId())
-                .question(newQuestion.getQuestion())
-                .answers(answers)
-                .build();
-        return questionDto;
     }
 
-    public void getAndSaveUniqueNewQuestionsWithAnswersInDB(int difficult, int quantity){
+    public void getAndSaveUniqueNewQuestionsWithAnswersInDB ( int difficult, int quantity){
         int savedQuestionCounter = 0;
         String r = sendGet(difficult, quantity, APIKEY);
         Gson gson = new Gson();
@@ -82,20 +99,18 @@ public class QuestionService {
             question.setComplexity(difficult);
             question.setHash(answers[0].hashCode());
 
-            if (isQuestionInDB(question.getHash())){
+            if (isQuestionInDB(question.getHash())) {
                 questionRepository.save(question);
                 savedQuestionCounter++;
             }
         }
-        System.out.println("Записано " + savedQuestionCounter + " новых вопросов из " + quantity + " полученных");
     }
 
-    public boolean isQuestionInDB(int hash){
-        if (questionRepository.findByHash(hash) == null) return true;
-        else return false;
+    public boolean isQuestionInDB ( int hash){
+        return questionRepository.findByHash(hash) == null;
     }
 
-    public String sendGet(int difficult, int quantity, String apikey){
+    public String sendGet ( int difficult, int quantity, String apikey){
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
         HttpEntity<String> entity = new HttpEntity<String>(headers);
@@ -103,4 +118,5 @@ public class QuestionService {
         System.out.println(result.getStatusCode());
         return result.getBody();
     }
+
 }

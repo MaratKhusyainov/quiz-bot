@@ -5,9 +5,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import ru.gb.questionapi.domain.Rating;
 import ru.gb.questionapi.dto.RatingDto;
-import ru.gb.questionapi.services.QuestionService;
 import ru.gb.questionapi.services.RatingService;
 
 @RestController

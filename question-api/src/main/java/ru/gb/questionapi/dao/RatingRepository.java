@@ -16,7 +16,7 @@ public interface RatingRepository extends JpaRepository<Rating, Long> {
                                             "FROM quiz_bot.rating) AS place_number " +
                                         "WHERE place_number.user_id = :userId" + "  ;";
     @Query(value = queryGetDailyPlaceNumber, nativeQuery = true)
-    int findDailyPlaceNumber(@Param("userId") Long id);
+    Integer findDailyPlaceNumber(@Param("userId") Long id);
 
 
     String queryGetWeeklyPlaceNumber =  "SELECT place_number.row_number " +

@@ -31,7 +31,7 @@ public class RatingService {
     public RatingDto findUserDailyRatingByChatId(Long chatId) {
         User user = userRepository.findByChatId(chatId);
         Rating rating = ratingRepository.findByUserId(user.getId());
-        int placeNumber = ratingRepository.findDailyPlaceNumber(user.getId());
+        Integer placeNumber = ratingRepository.findDailyPlaceNumber(user.getId());
 
         return RatingDto.builder()
                 .loginOrName(chooserLoginOrName(user))
@@ -43,7 +43,7 @@ public class RatingService {
     public RatingDto findUserWeeklyRatingByChatId(Long chatId) {
         User user = userRepository.findByChatId(chatId);
         Rating rating = ratingRepository.findByUserId(user.getId());
-        int placeNumber = ratingRepository.findWeeklyPlaceNumber(user.getId());
+        Integer placeNumber = ratingRepository.findWeeklyPlaceNumber(user.getId());
 
         return RatingDto.builder()
                 .loginOrName(chooserLoginOrName(user))
@@ -55,7 +55,7 @@ public class RatingService {
     public RatingDto findUserMonthlyRatingByChatId(Long chatId) {
         User user = userRepository.findByChatId(chatId);
         Rating rating = ratingRepository.findByUserId(user.getId());
-        int placeNumber = ratingRepository.findMonthlyPlaceNumber(user.getId());
+        Integer placeNumber = ratingRepository.findMonthlyPlaceNumber(user.getId());
 
         return RatingDto.builder()
                 .loginOrName(chooserLoginOrName(user))
@@ -67,7 +67,7 @@ public class RatingService {
     public RatingDto findUserTotalRatingByChatId(Long chatId) {
         User user = userRepository.findByChatId(chatId);
         Rating rating = ratingRepository.findByUserId(user.getId());
-        int placeNumber = ratingRepository.findTotalPlaceNumber(user.getId());
+        Integer placeNumber = ratingRepository.findTotalPlaceNumber(user.getId());
 
         return RatingDto.builder()
                 .loginOrName(chooserLoginOrName(user))

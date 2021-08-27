@@ -9,4 +9,5 @@ public class QuestionDto {
     private Long questionId;
     private String question;
     private String[] answers;
+    boolean canGetQuestion;
 }

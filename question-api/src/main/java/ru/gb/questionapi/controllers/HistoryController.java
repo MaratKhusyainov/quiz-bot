@@ -16,7 +16,6 @@ public class HistoryController {
         this.historyService = historyService;
     }
 
-
     @PostMapping()
     public void createHistory(@RequestBody HistoryDto historyDto){
         historyService.saveOrUpdate(historyDto);
