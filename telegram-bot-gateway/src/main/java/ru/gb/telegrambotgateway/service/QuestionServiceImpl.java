@@ -28,7 +28,6 @@ public class QuestionServiceImpl implements QuestionService {
         String url = "http://" + host + ":" + port + "/question/" + chatId;
         ResponseEntity<QuestionDto> responseEntity = restTemplate.getForEntity(url, QuestionDto.class);
         save(chatId, responseEntity.getBody());
-        System.out.println(responseEntity.getBody());
         return responseEntity.getBody();
     }
 
