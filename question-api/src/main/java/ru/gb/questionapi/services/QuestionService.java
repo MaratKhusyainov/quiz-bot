@@ -57,9 +57,9 @@ public class QuestionService {
 
     public QuestionDto findNewQuestion(Long chatId) {
         Question newQuestion = questionRepository.findOneNewQuestion(chatId);
-        Integer howManyQuestionsUserGetToday = historyRepository.howManyQuestionsUserGetToday(chatId);
+        Integer howManyAnswersUserSendToday = historyRepository.howManyAnswersUserSendToday(chatId);
 
-        if (howManyQuestionsUserGetToday <= MAXIMUM_QUESTIONS_PER_DAY) {
+        if (howManyAnswersUserSendToday < MAXIMUM_QUESTIONS_PER_DAY) {
             while (newQuestion == null) {
                 getAndSaveUniqueNewQuestionsWithAnswersInDB(chooseDifficultQuestionsMode(), QUANTITY_QUESTIONS);
                 newQuestion = questionRepository.findOneNewQuestion(chatId);
