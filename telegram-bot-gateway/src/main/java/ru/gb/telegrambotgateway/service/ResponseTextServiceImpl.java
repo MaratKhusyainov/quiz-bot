@@ -77,7 +77,7 @@ public class ResponseTextServiceImpl implements ResponseTextService {
                 "По добавлению новых вопросов, поддержке, нахождению ошибок не стесняйся и пиши команде разработчиков:\n" +
                 "@mxpnk\n" +
                 "@iura_so_cute\n" +
-                "No Name\n";
+                "@just_mar1";
     }
 
 }
