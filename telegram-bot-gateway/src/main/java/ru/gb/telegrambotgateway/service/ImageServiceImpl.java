@@ -30,10 +30,9 @@ public class ImageServiceImpl implements ImageService {
         List<String> questionList = parseQuestion(question);
 
         ImagePlus image = new ImagePlus();
-//        image.setImage(ImageIO.read(new ClassPathResource("templates/template.png").getInputStream()));
         image.setImage(ImageIO.read(resourceLoader.getResource("classpath:templates/template.png").getInputStream()));
 
-        Font font = new Font(/*"Bahnschrift SemiBold"*/"Times New Roman", Font.BOLD, 64);
+        Font font = new Font("Comic Sans MS", Font.BOLD, 64);
         int sizeBetweenRows = font.getSize();
         Graphics g = image.getImage().getGraphics();
         FontMetrics ruler = g.getFontMetrics(font);
@@ -52,7 +51,8 @@ public class ImageServiceImpl implements ImageService {
         for (int i = 0; i < questionList.size(); i++) {
             AttributedString attributedText = new AttributedString(questionList.get(i));
             attributedText.addAttribute(TextAttribute.FONT, font);
-            attributedText.addAttribute(TextAttribute.FOREGROUND, new Color(0, 166, 147));
+//            attributedText.addAttribute(TextAttribute.FOREGROUND, new Color(0, 166, 147));
+            attributedText.addAttribute(TextAttribute.FOREGROUND, Color.WHITE);
             g.drawString(attributedText.getIterator(), (image.getWidth() - g.getFontMetrics(font).stringWidth(questionList.get(i))) / 2, (image.getHeight() - textHeight) / 2 + (sizeBetweenRows + font.getSize()) * i + sizeBetweenRows/2);
         }
 

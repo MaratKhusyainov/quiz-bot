@@ -23,10 +23,15 @@ public class PlayHandler implements Handler {
 
         ResponseMessage responseMessage = getResponseMessage(user.getId());
         if (text.equals(questionDto.getAnswers().get(0))) {
-            responseMessage.getSendMessage().setText(textService.getCorrectAnswer());
+            responseMessage.getSendMessage().setText(
+                    text + System.lineSeparator() +
+                    textService.getCorrectAnswer());
             questionService.answer(user.getId(), questionDto, true);
         } else {
-            responseMessage.getSendMessage().setText(textService.getIncorrectAnswer() + System.lineSeparator() + "Правильный ответ: " + questionDto.getAnswers().get(0));
+            responseMessage.getSendMessage().setText(
+                    textService.getIncorrectAnswer() + System.lineSeparator() +
+                    "Ты ответил: " + text + System.lineSeparator() +
+                    "Правильный ответ: " + questionDto.getAnswers().get(0));
             questionService.answer(user.getId(), questionDto, false);
         }
         responseMessage.setButtonStage(Stage.ANSWER);
